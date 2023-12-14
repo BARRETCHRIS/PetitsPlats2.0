@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;700&display=swap');
+
+@import url("filters.css");
+@import url("recipes.css");
+/* ---- Appels des fonts ----
+font-family: 'Anton', sans-serif;
+font-family: 'Manrope', sans-serif; */
+
+/* ---- Reset ---- */
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+/* ---- General ---- */
+:root {
+  --primary-color: rgb(255, 209, 91); 
+  --bg-color: lightgrey;
+  --elements-bg-color: white;
+  --text-color: rgba(122, 122, 122, 1)
+}
+
+body {
+    font-family: 'Anton', sans-serif;
+    margin: 0;
+}
+
+header, main{
+    background-color: var(--bg-color);
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* ---- Header ---- */
+header {
+    background-image: url('../assets/header/lampos-aritonang_1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right top;
+    height: 670px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+}
+
+#logo_link {
+    height: 10%;
+    position: absolute;
+    top: 50px;
+    left: 60px;
+}
+.logo {
+    width: 60%;
+    height: auto;
+}
+
+.header_search{
+    text-align: center;
+    margin: auto 0;
+}
+
+.tagline{
+    width: 100%;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 44px;
+}
+
+.main_search_wrap{
+    width: 100%;
+    max-width: 950px;
+    height: 75px;
+    margin: 0 auto;
+    padding: 0 10px;
+    background: var(--elements-bg-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main_search_input{
+    border: inherit;
+    width: 80%;
+}
+
+.main_search_cross{
+    width: 15px;
+    aspect-ratio: 1 / 1;
+    display: none;
+    cursor: pointer;
+}
+
+.main_search_loop {
+    width: 51px;
+    height: auto;
+    cursor: pointer;
+}
+
+.main_search_loop:hover > *{
+    fill: var(--primary-color);
+    stroke: black;
+    transition: fill 0.3s ease, stroke 0.3s ease;
+}
+.main_search_loop:hover > rect{
+    fill: var(--primary-color);
+    stroke: inherit;
+    transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+/* ---- Main ---- */
+.display_wrap{
+    padding: 30px 100px;
+    font-family: 'Manrope', sans-serif;   
+}
