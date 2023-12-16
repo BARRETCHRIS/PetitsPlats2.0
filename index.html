@@ -40,10 +40,10 @@
         <section class="filters_search">
             <div class="filters">
                 <div class="form_filters">
-                    <form action="post" class="ingredients filter">
+                    <form action="post" class="ingredients filter" id="ingredients_form">
                         <legend class="title_filter">
                             <span>Ingredients</span>
-                            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                            <span class="chevron" id="ingredients_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
                         <div class="filter_search" id="ingredients">
                             <input type="text" id="ingredients_search" class="filter_search_input" placeholder="">
@@ -59,16 +59,16 @@
                             <li>Jus de citron</li>
                         </ul>
                     </form>
-                    <form action="post" class="appareils filter">
+                    <form action="post" class="appareils filter" id="appareils_form">
                         <legend class="title_filter">
                             <span>Appareils</span>
-                            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                            <span class="chevron" id="appareils_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
                     </form>
-                    <form action="post" class="ustensiles filter">
+                    <form action="post" class="ustensiles filter" id="ustensiles_form">
                         <legend class="title_filter">
                             <span>Ustensiles</span>
-                            <span class="chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                            <span class="chevron"><i class="fa-solid fa-chevron-down" id="ustensiles_chevron"></i></span>
                         </legend>
                     </form>
                 </div>
@@ -124,5 +124,6 @@
     </main>
     <!-- **** Scripts **** -->
     <script src="js/api/Api.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
