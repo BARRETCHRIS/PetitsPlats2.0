@@ -1,6 +1,5 @@
-
 // Fonction pour gérer le clic sur le chevron
-function toggleFormHeight(formId, chevronId) {
+function toggleForm(formId, chevronId) {
     const form = document.getElementById(formId);
     const chevron = document.getElementById(chevronId);
 
@@ -14,16 +13,13 @@ function toggleFormHeight(formId, chevronId) {
 
 // Ajouter des gestionnaires de clic aux chevrons
 document.getElementById("ingredients_chevron").addEventListener("click", function () {
-    toggleFormHeight("ingredients_form", "ingredients_chevron");
+    toggleForm("ingredients_form", "ingredients_chevron");
 });
 
 document.getElementById("appareils_chevron").addEventListener("click", function () {
-    toggleFormHeight("appareils_form", "appareils_chevron");
+    toggleForm("appareils_form", "appareils_chevron");
 });
 
 document.getElementById("ustensiles_chevron").addEventListener("click", function () {
-    toggleFormHeight("ustensiles_form", "ustensiles_chevron");
+    toggleForm("ustensiles_form", "ustensiles_chevron");
 });
-
-// Ajouter d'autres gestionnaires de clic au besoin
-
