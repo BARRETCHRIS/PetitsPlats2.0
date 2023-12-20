@@ -55,8 +55,7 @@
                             </svg>
                         </div>
                         <ul class="ingredients_list">
-                            <li>Crème de Coco</li>
-                            <li>Jus de citron</li>
+                            
                         </ul>
                     </form>
                     <form action="post" class="appareils filter" id="appareils_form">
@@ -64,12 +63,35 @@
                             <span>Appareils</span>
                             <span class="chevron" id="appareils_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
+                        <div class="filter_search" id="appliances">
+                            <input type="text" id="ingredients_search" class="filter_search_input" placeholder="">
+                            <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
+                            <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
+                                <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
+                                <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
+                            </svg>
+                        </div>
+                        <ul class="appliance_list">
+                            
+                        </ul>
                     </form>
                     <form action="post" class="ustensiles filter" id="ustensiles_form">
                         <legend class="title_filter">
                             <span>Ustensiles</span>
                             <span class="chevron"><i class="fa-solid fa-chevron-down" id="ustensiles_chevron"></i></span>
                         </legend>
+                        <div class="filter_search" id="ustensils">
+                            <input type="text" id="ustensils_search" class="filter_search_input" placeholder="">
+                            <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
+                            <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
+                                <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
+                                <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
+                            </svg>
+                        </div>
+                        <ul class="ustensils_list">
+                        </ul>
                     </form>
                 </div>
                 <div class="nbr_recipes">1500 recettes</div>
@@ -79,9 +101,9 @@
             </div>
         </section>
            
-        <section class="display_recipes">
+        <section class="display_recipes" id="recipes-container">
             <article class="recipe_card">
-                <div class="recipe_time">10 min</div>
+                <div class="recipe_time">time min</div>
                 <div class="recipe_img_wrap">
                     <img src="assets/imagesPlats/Recette01.jpg" alt="" class="recipe_img">
                 </div>
@@ -96,23 +118,23 @@
                         <ul>
                             <li class="ingredient">
                                 <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info">blabla blabla </p>
+                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
                             </li>
                             <li class="ingredient">
                                 <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info">blabla blabla </p>
+                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
                             </li>
                             <li class="ingredient">
                                 <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info">blabla blabla </p>
+                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
                             </li>
                             <li class="ingredient">
                                 <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info">blabla blabla </p>
+                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
                             </li>
                             <li class="ingredient">
                                 <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info">blabla blabla </p>
+                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
                             </li>
                         </ul>
                     </div>
@@ -125,7 +147,17 @@
     <!-- **** Scripts **** -->
     <script src="js/api/Api.js"></script>
     <script src="js/api/RecipesApi.js"></script>
-    <script src="js/utils/toggleForm.js"></script>
+    <script src="js/utils/toggleFormFilters.js"></script>
+
+    <!-- <script src="js/templates/recipesTemplate.js"></script>
+    <script src="js/utils/RecipeRenderer.js"></script> -->
+
+    <!-- <script src="js/utils/ListsDatasFilters.js"></script>
+    <script src="js/templates/FilterListTemplate.js"></script> -->
+
     <script src="js/App.js"></script>
+
+    <!-- <script src="js/utils/ListsDatasFilters.js"></script>
+    <script src="js/templates/FilterListTemplate.js"></script> -->
 </body>
 </html>

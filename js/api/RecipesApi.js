@@ -1,5 +1,3 @@
-// import Api from './api/Api.js';
-
 class RecipesApi extends Api {
     /**
      * 
