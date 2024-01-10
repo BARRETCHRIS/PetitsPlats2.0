@@ -45,7 +45,7 @@
                             <span>Ingredients</span>
                             <span class="chevron" id="ingredients_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
-                        <div class="filter_search" id="ingredients">
+                        <div class="filter_search" id="ingredients_btn">
                             <input type="text" id="ingredients_search" class="filter_search_input" placeholder="">
                             <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
                             <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
@@ -54,17 +54,14 @@
                                 <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                             </svg>
                         </div>
-                        <ul class="ingredients_list">
-                            
-                        </ul>
                     </form>
                     <form action="post" class="appareils filter" id="appareils_form">
                         <legend class="title_filter">
                             <span>Appareils</span>
                             <span class="chevron" id="appareils_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
-                        <div class="filter_search" id="appliances">
-                            <input type="text" id="ingredients_search" class="filter_search_input" placeholder="">
+                        <div class="filter_search" id="appareils_btn">
+                            <input type="text" id="appareils_search" class="filter_search_input" placeholder="">
                             <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
                             <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
@@ -72,16 +69,13 @@
                                 <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                             </svg>
                         </div>
-                        <ul class="appliance_list">
-                            
-                        </ul>
                     </form>
-                    <form action="post" class="ustensiles filter" id="ustensiles_form">
+                    <form action="post" class="ustensils filter" id="ustensils_form">
                         <legend class="title_filter">
-                            <span>Ustensiles</span>
-                            <span class="chevron"><i class="fa-solid fa-chevron-down" id="ustensiles_chevron"></i></span>
+                            <span>Ustensils</span>
+                            <span class="chevron"><i class="fa-solid fa-chevron-down" id="ustensils_chevron"></i></span>
                         </legend>
-                        <div class="filter_search" id="ustensils">
+                        <div class="filter_search" id="ustensils_btn">
                             <input type="text" id="ustensils_search" class="filter_search_input" placeholder="">
                             <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
                             <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
@@ -90,74 +84,19 @@
                                 <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                             </svg>
                         </div>
-                        <ul class="ustensils_list">
-                        </ul>
                     </form>
                 </div>
                 <div class="nbr_recipes">1500 recettes</div>
             </div>
-            <div class="filters_tags">
-                <div class="tag_wrap"><span class="tag">Tag</span><span class="delete_tag"><img class="tag_cross" src="assets/icons/cross.svg" alt="Supprimer le tag"></span></div>
-            </div>
+            <div class="filters_tags"></div>
         </section>
            
-        <section class="display_recipes" id="recipes-container">
-            <article class="recipe_card">
-                <div class="recipe_time">time min</div>
-                <div class="recipe_img_wrap">
-                    <img src="assets/imagesPlats/Recette01.jpg" alt="" class="recipe_img">
-                </div>
-                <div class="recipe_infos">
-                    <h2 class="title_recipe">Titre recette</h2>
-                    <div class="recipe_describe">
-                        <h3 class="subtitle_recipe">Recette</h3>
-                        <p class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque iusto molestiae officiis? Cupiditate, aut velit tempore ipsa reprehenderit praesentium similique consequuntur quae nostrum temporibus rerum quis dolore maiores consectetur distinctio.</p>
-                    </div>
-                    <div class="recipe_uses">
-                        <h3 class="subtitle_recipe">Ingredients</h3>
-                        <ul>
-                            <li class="ingredient">
-                                <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
-                            </li>
-                            <li class="ingredient">
-                                <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
-                            </li>
-                            <li class="ingredient">
-                                <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
-                            </li>
-                            <li class="ingredient">
-                                <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
-                            </li>
-                            <li class="ingredient">
-                                <h4 class="title_ingredient">Titre ingrédients</h4>
-                                <p class="ingredient_info"><span>quantity ingredient</span><span>unit ingredient</span></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-            </article>
-        </section>
+        <section class="display_recipes"></section>
 
     </main>
     <!-- **** Scripts **** -->
-    <script src="js/api/Api.js"></script>
-    <script src="js/api/RecipesApi.js"></script>
-    <script src="js/utils/toggleFormFilters.js"></script>
+    <!-- <script src="js/api/RecipesApi.js"></script> -->
+    <script type="module" src="js/main.js"></script>
 
-    <!-- <script src="js/templates/recipesTemplate.js"></script>
-    <script src="js/utils/RecipeRenderer.js"></script> -->
-
-    <!-- <script src="js/utils/ListsDatasFilters.js"></script>
-    <script src="js/templates/FilterListTemplate.js"></script> -->
-
-    <script src="js/App.js"></script>
-
-    <!-- <script src="js/utils/ListsDatasFilters.js"></script>
-    <script src="js/templates/FilterListTemplate.js"></script> -->
 </body>
 </html>

@@ -40,7 +40,7 @@
     left: 300px;
 }
 
-.ustensiles{
+.ustensils{
     left: 600px;
 }
 
@@ -75,9 +75,13 @@
 .filter_search_cross{
     width: 10px;
     aspect-ratio: 1 / 1;
-    /* display: none; */
+    display: none;
     cursor: pointer;
     margin: 0 5px;
+}
+
+.visible_cross{
+    display: block;
 }
 
 .filter_search_loop{
@@ -93,6 +97,27 @@
 
 .filter_search_loop > rect{
     stroke: inherit;
+}
+
+.list_scroll {
+    overflow-y: auto;
+    max-height: 200px;
+    margin: 0; 
+    padding: 0;
+    scrollbar-width: none;
+}
+
+.selected {
+    background: var(--primary-color);
+}
+
+.list_scroll::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.listItem{
+    cursor: pointer;
 }
 
 .nbr_recipes{
@@ -118,7 +143,7 @@
 }
 
 .tag, .delete_tag{
-    margin: auto 17px;
+    margin: auto 10px auto 17px;
 }
 
 .tag_cross{

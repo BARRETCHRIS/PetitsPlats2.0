@@ -1,5 +1,4 @@
-// export default 
-class Api {
+export default class Api {
     /**
      * 
      * @param {string} url 
@@ -9,17 +8,15 @@ class Api {
         
     }
 
-    async get() {
+    async fetch() {
         try {
             const response = await fetch(this._url);
             const datas = await response.json();
-            return datas;
+            // console.log(datas);
+            return datas; 
         } catch (error) {
             console.log('An error occurred:', error);
             throw error;
         }
     }
 }
-
-
-
