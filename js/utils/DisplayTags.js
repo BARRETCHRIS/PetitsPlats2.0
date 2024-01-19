@@ -20,8 +20,6 @@ export default class DisplayTags {
                 this.deleteTag(tagName, listItem);
             });
 
-            // console.log(listItem)
-
             const filterType = this.getFilterTypeFromListItem(listItem);
 
             this.tags.push({
@@ -35,19 +33,25 @@ export default class DisplayTags {
             listItem.classList.add('selected');
             listItem.setAttribute('aria-checked', 'true');
         }
-        console.log(this.tags)
+        console.log(this.tags);
+        // Retourne les tags après chaque mise à jour
+        return this.tags;
     }
-    
+
     deleteTag(tagName, listItem) {
-        const tagInfo = this.tags.find(tag => tag.tagName === tagName && tag.listItem === listItem);
-        if (tagInfo) {
+        const tagInfoIndex = this.tags.findIndex(tag => tag.tagName === tagName && tag.listItem === listItem);
+        if (tagInfoIndex !== -1) {
+            const tagInfo = this.tags[tagInfoIndex];
             this.container.removeChild(tagInfo.tagElement);
-            this.tags = this.tags.filter(tag => tag !== tagInfo);
+
+            // Utilisez splice pour supprimer l'élément à l'index correspondant
+            this.tags.splice(tagInfoIndex, 1);
 
             // Supprime la classe 'selected' et modifiez l'attribut 'aria-checked'
             listItem.classList.remove('selected');
             listItem.setAttribute('aria-checked', 'false');
         }
+        console.log(this.tags);
     }
 
     getTagByName(tagName) {

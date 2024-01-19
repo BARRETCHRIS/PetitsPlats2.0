@@ -99,6 +99,10 @@
     stroke: inherit;
 }
 
+.filter-error-message{
+    background: var(--primary-color);
+}
+
 .list_scroll {
     overflow-y: auto;
     max-height: 200px;

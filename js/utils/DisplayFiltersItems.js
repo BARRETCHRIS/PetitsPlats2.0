@@ -15,23 +15,22 @@ export default class DisplayFiltersItems {
         const parentForm = document.getElementById(parentFormId);
         const filterContainer = parentForm.querySelector(`#${filterType}_btn`);
 
-        // TEST FILTER SEARCH
         this.clearLists(parentForm);
-        // FIN TEST FILTER SEARCH
 
         filterContainer.insertAdjacentElement('afterend', filterList);
 
         filterList.querySelectorAll('li').forEach((listItem) => {
             listItem.addEventListener('click', () => {
                 const tagName = listItem.textContent;
-                this.displayTags.createTag(tagName, listItem);
+                const updatedTags = this.displayTags.createTag(tagName, listItem);
+                console.log(updatedTags);
+                return updatedTags;
             });
         });
     }  
 
-    // TEST FILTER SEARCH
     clearLists(parentForm) {
-        // Nettoyez toutes les listes sous le formulaire
+        // Nettoye toutes les listes sous le formulaire
         const lists = parentForm.querySelectorAll('ul');
         lists.forEach(list => {
             while (list.firstChild) {
@@ -39,5 +38,4 @@ export default class DisplayFiltersItems {
             }
         });
     }
-    // FIN TEST FILTER SEARCH  
 }

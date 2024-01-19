@@ -21,7 +21,7 @@ export default class GetDatasApi extends Api {
             });
         });
         // console.log('Getting all ingredients set:', ingredients);
-        console.log('Getting all ingredients array:', Array.from(ingredients));
+        // console.log('Getting all ingredients array:', Array.from(ingredients));
         return Array.from(ingredients);
     }
 

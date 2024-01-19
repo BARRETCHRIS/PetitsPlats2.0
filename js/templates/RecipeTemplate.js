@@ -22,7 +22,7 @@ export default class RecipeTemplate {
                         ${this.recipe.ingredients.map(ingredient => `
                             <li class="ingredient">
                                 <h4 class="title_ingredient">${ingredient.ingredient}</h4>
-                                <p class="ingredient_info">${ingredient.quantity} ${ingredient.unit || ''}</p>
+                                <p class="ingredient_info">${ingredient.quantity || ''} ${ingredient.unit || ''}</p>
                             </li>
                         `).join('')}
                     </ul>
