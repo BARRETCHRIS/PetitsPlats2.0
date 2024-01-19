@@ -60,6 +60,49 @@ class App {
 
         // // Affiche toutes les recettes au départ
         // this.displayRecipes.displayAllRecipes(recipes);
+
+        // Accéde à la propriété updatedTags après avoir créé l'instance de DisplayFiltersItems
+        console.log('Initial Updated Tags:', this.displayFilters.updatedTags);
+
+        // Ajoute un gestionnaire d'événements pour l'événement personnalisé
+        document.addEventListener('filtersUpdated', (event) => {
+            const updatedTags = event.detail;
+
+            // Accéde à la propriété updatedTags lorsqu'elle est mise à jour
+            console.log('Updated Tags:', updatedTags);
+
+            // Filtre les recettes en fonction des tags mis à jour
+            const filteredRecipes = this.filterRecipesWithTags(recipes, updatedTags);
+
+            // Met à jour l'affichage avec les recettes filtrées
+            this.displayRecipes.displayAllRecipes(filteredRecipes);
+        });
+
+        // Affiche toutes les recettes au départ
+        this.displayRecipes.displayAllRecipes(recipes);
+
+        
+    }
+
+    // Ajoute une méthode pour filtrer les recettes avec les tags mis à jour
+    filterRecipesWithTags(recipes, tags) {
+        // Si le tableau de tags est vide, retournez toutes les recettes
+        if (tags.length === 0) {
+            return recipes;
+        }
+
+        // Filtre les recettes en fonction des tags
+        const filteredRecipes = recipes.filter(recipe => {
+            // Vérifier si tous les tags sont présents dans la recette
+            return tags.every(tag => {
+                // Vérifie si le tag est présent dans la liste d'ingrédients, appareils ou ustensils de la recette
+                return recipe.ingredients.some(ingredient => ingredient.ingredient === tag) ||
+                       recipe.appliance === tag ||
+                       recipe.ustensils.includes(tag);
+            });
+        });
+
+        return filteredRecipes;
     }
 
     // // Ajoute une méthode pour filtrer les recettes avec les tags mis à jour
@@ -82,7 +125,7 @@ class App {
 
     //     return filteredRecipes;
     // }
-
+        
 }
 
 const app = new App();
