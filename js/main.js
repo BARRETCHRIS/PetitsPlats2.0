@@ -5,11 +5,6 @@ import ToggleFormChevron from "./utils/ToggleFormChevron.js";
 import FiltersSearch from "./utils/FiltersSearch.js";
 
 // TEST CALCUL NBR RECETTES
-// FIN TEST CALCUL NBR RECETTES
-// OTHER TEST CALCUL NBR RECETTES
-// FIN OTHER TEST CALCUL NBR RECETTES
-
-// TEST CALCUL NBR RECETTES
 // import NbrRecipes from "./utils/NbrRecipes.js";
 // FIN TEST CALCUL NBR RECETTES
 
@@ -52,13 +47,41 @@ class App {
         const ustensils = await this.getDatas.getUstensils();
         this.displayFilters.displayFilterItems('ustensils', ustensils, 'ustensils_form');
 
-        // Utilisez les données comme nécessaire
-        // console.log(recipes);
-        // console.log(ingredients);
-        // console.log(appareils);
-        // console.log(ustensils);
+        // // Ajoute un gestionnaire d'événements pour l'événement personnalisé
+        // document.addEventListener('filtersUpdated', (event) => {
+        //     const updatedTags = event.detail;
 
+        //     // Filtre les recettes en fonction des tags mis à jour
+        //     const filteredRecipes = this.filterRecipesWithTags(recipes, updatedTags);
+
+        //     // Met à jour l'affichage avec les recettes filtrées
+        //     this.displayRecipes.displayAllRecipes(filteredRecipes);
+        // });
+
+        // // Affiche toutes les recettes au départ
+        // this.displayRecipes.displayAllRecipes(recipes);
     }
+
+    // // Ajoute une méthode pour filtrer les recettes avec les tags mis à jour
+    // filterRecipesWithTags(recipes, tags) {
+    //     // Si le tableau de tags est vide, retournez toutes les recettes
+    //     if (tags.length === 0) {
+    //         return recipes;
+    //     }
+
+    //     // Filtre les recettes en fonction des tags
+    //     const filteredRecipes = recipes.filter(recipe => {
+    //         // Vérifie si tous les tags sont présents dans la recette
+    //         return tags.every(tag => {
+    //             // Vérifie si le tag est présent dans la liste d'ingrédients, appareils ou ustensils de la recette
+    //             return recipe.ingredients.some(ingredient => ingredient.ingredient === tag) ||
+    //                    recipe.appliance === tag ||
+    //                    recipe.ustensils.includes(tag);
+    //         });
+    //     });
+
+    //     return filteredRecipes;
+    // }
 
 }
 
