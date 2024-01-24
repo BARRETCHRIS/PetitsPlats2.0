@@ -19,11 +19,19 @@ class App {
         this.recipeCounter = new RecipeCounter('.display_recipes');
         // FIN OTHER TEST CALCUL NBR RECETTES
 
+        // Ajout des gestionnaires d'événements
         document.addEventListener('tagsUpdated', async () => {
             // Met à jour la liste des tags lorsque l'événement est émis
             await this.getAndLogTagsList();
             await this.initializeRecipes(); 
+
+            // this.main();
         });
+
+        // Ajout des gestionnaires de clic aux chevrons en utilisant ToggleFormChevron
+        ToggleFormChevron.addToggleEventListener("ingredients_chevron", "ingredients_form", "ingredients_chevron");
+        ToggleFormChevron.addToggleEventListener("appareils_chevron", "appareils_form", "appareils_chevron");
+        ToggleFormChevron.addToggleEventListener("ustensils_chevron", "ustensils_form", "ustensils_chevron");
     }
 
     async getAndLogTagsList() {
@@ -55,7 +63,7 @@ class App {
 
     async main() {
         // const recipes = await this.getDatas.getAllRecipes();
-        // await this.initializeRecipes();
+        await this.initializeRecipes();
         this.displayRecipes.displayAllRecipes(this.recipes);
 
         const ingredients = await this.getDatas.getIngredients();
@@ -82,12 +90,6 @@ class App {
 }
 
 const app = new App();
-
-// Ajout des gestionnaires de clic aux chevrons en utilisant ToggleFormChevron
-ToggleFormChevron.addToggleEventListener("ingredients_chevron", "ingredients_form", "ingredients_chevron");
-ToggleFormChevron.addToggleEventListener("appareils_chevron", "appareils_form", "appareils_chevron");
-ToggleFormChevron.addToggleEventListener("ustensils_chevron", "ustensils_form", "ustensils_chevron");
-
 
 app.getAndLogTagsList();
 

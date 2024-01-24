@@ -1,6 +1,5 @@
 import RecipeTemplate from "../templates/RecipeTemplate.js";
 
-
 export default class DisplayRecipes {
     constructor(containerSelector) {
         this.container = document.querySelector(containerSelector);
