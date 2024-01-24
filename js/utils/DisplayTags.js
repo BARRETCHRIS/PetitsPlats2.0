@@ -33,7 +33,10 @@ export default class DisplayTags {
             listItem.classList.add('selected');
             listItem.setAttribute('aria-checked', 'true');
         }
-        console.log(this.tags);
+
+        // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
+        document.dispatchEvent(new Event('tagsUpdated'));
+
         // Retourne les tags après chaque mise à jour
         return this.tags;
     }
@@ -51,7 +54,11 @@ export default class DisplayTags {
             listItem.classList.remove('selected');
             listItem.setAttribute('aria-checked', 'false');
         }
-        console.log(this.tags);
+        // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
+        document.dispatchEvent(new Event('tagsUpdated'));
+
+        // Retourne les tags après chaque mise à jour
+        return this.tags;
     }
 
     getTagByName(tagName) {
@@ -62,5 +69,9 @@ export default class DisplayTags {
         // Récupére le filterType en analysant les classes du parent ul
         const filterTypeClass = listItem.parentElement.classList[0]; // Utilise la première classe du parent ul
         return filterTypeClass.replace('_list', ''); 
+    }
+
+    getTags() {
+        return this.tags;
     }
 }

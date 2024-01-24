@@ -3,8 +3,7 @@ export default class FilterTemplate {
         this.filterType = filterType;
         this.items = items;
     }
-
-    // TEST GENERATION ERREUR MESSAGE
+    
     generateHTML() {
         const filterList = document.createElement('ul');
         filterList.classList.add(`${this.filterType}_list`, 'list_scroll');
@@ -26,5 +25,4 @@ export default class FilterTemplate {
 
         return filterList;
     }
-    // FIN TEST GENERATION ERREUR MESSAGE
 }

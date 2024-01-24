@@ -6,9 +6,6 @@ export default class DisplayFiltersItems {
     constructor(containerSelector) {
         this.container = document.querySelector(containerSelector);
         this.displayTags = new DisplayTags('.filters_tags', ['ingredients', 'appareils', 'ustensiles']);
-
-        // Ajoute une propriété pour stocker les tags mis à jour
-        this.updatedTags = [];
     }
 
     displayFilterItems(filterType, items, parentFormId) {
@@ -22,26 +19,12 @@ export default class DisplayFiltersItems {
 
         filterContainer.insertAdjacentElement('afterend', filterList);
 
-        // filterList.querySelectorAll('li').forEach((listItem) => {
-        //     listItem.addEventListener('click', () => {
-        //         const tagName = listItem.textContent;
-        //         const updatedTags = this.displayTags.createTag(tagName, listItem);
-        //         console.log(updatedTags);
-        //         return updatedTags;
-        //     });
-        // });
-
         filterList.querySelectorAll('li').forEach((listItem) => {
             listItem.addEventListener('click', () => {
                 const tagName = listItem.textContent;
                 const updatedTags = this.displayTags.createTag(tagName, listItem);
-                
-                // Met à jour la propriété updatedTags
-                this.updatedTags = updatedTags;
-
-                // Émet un événement personnalisé avec les tags mis à jour
-                const event = new CustomEvent('filtersUpdated', { detail: updatedTags });
-                document.dispatchEvent(event);
+                // console.log(updatedTags);
+                return updatedTags;
             });
         });
     }  
@@ -54,5 +37,11 @@ export default class DisplayFiltersItems {
                 list.removeChild(list.firstChild);
             }
         });
+    }
+
+    getTagsList() {
+        const tagsList = this.displayTags.getTags();
+        // console.log(tagsList);
+        return tagsList;
     }
 }

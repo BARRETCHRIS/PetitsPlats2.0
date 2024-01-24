@@ -8,7 +8,6 @@ export default class GetDatasApi extends Api {
 
     async getAllRecipes() {
         this.recipes = await this.fetch();
-        // console.log('Getting all recipes:', this.recipes);
         return this.recipes;
     }
 
@@ -20,8 +19,7 @@ export default class GetDatasApi extends Api {
                 ingredients.add(ingredient.ingredient);
             });
         });
-        // console.log('Getting all ingredients set:', ingredients);
-        // console.log('Getting all ingredients array:', Array.from(ingredients));
+        
         return Array.from(ingredients);
     }
 
