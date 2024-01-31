@@ -32,6 +32,9 @@ export default class DisplayTags {
             // Ajoute la classe 'selected' et modifie l'attribut 'aria-checked'
             listItem.classList.add('selected');
             listItem.setAttribute('aria-checked', 'true');
+
+            // // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
+            // document.dispatchEvent(new Event('tagsUpdated'));
         }
 
         // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
@@ -53,6 +56,9 @@ export default class DisplayTags {
             // Supprime la classe 'selected' et modifiez l'attribut 'aria-checked'
             listItem.classList.remove('selected');
             listItem.setAttribute('aria-checked', 'false');
+
+            // // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
+            // document.dispatchEvent(new Event('tagsUpdated'));
         }
         // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
         document.dispatchEvent(new Event('tagsUpdated'));

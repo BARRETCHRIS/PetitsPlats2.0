@@ -5,7 +5,7 @@ import DisplayTags from "./DisplayTags.js";
 export default class DisplayFiltersItems {
     constructor(containerSelector) {
         this.container = document.querySelector(containerSelector);
-        this.displayTags = new DisplayTags('.filters_tags', ['ingredients', 'appareils', 'ustensiles']);
+        this.displayTags = new DisplayTags('.filters_tags', ['ingredients', 'appliance', 'ustensiles']);
     }
 
     displayFilterItems(filterType, items, parentFormId) {
@@ -23,7 +23,6 @@ export default class DisplayFiltersItems {
             listItem.addEventListener('click', () => {
                 const tagName = listItem.textContent;
                 const updatedTags = this.displayTags.createTag(tagName, listItem);
-                // console.log(updatedTags);
                 return updatedTags;
             });
         });

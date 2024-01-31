@@ -11,7 +11,7 @@ export default class GetDatasApi extends Api {
         return this.recipes;
     }
 
-    async getIngredients() {
+    getIngredients() {
         const ingredients = new Set();
 
         this.recipes.forEach(recipe => {
@@ -23,17 +23,17 @@ export default class GetDatasApi extends Api {
         return Array.from(ingredients);
     }
 
-    async getAppareils() {
-        const appareils = new Set();
+    getAppliance() {
+        const appliance = new Set();
 
         this.recipes.forEach(recipe => {
-            appareils.add(recipe.appliance);
+            appliance.add(recipe.appliance);
         });
 
-        return Array.from(appareils);
+        return Array.from(appliance);
     }
 
-    async getUstensils() {
+    getUstensils() {
         const ustensils = new Set();
 
         this.recipes.forEach(recipe => {

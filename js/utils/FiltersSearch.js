@@ -65,8 +65,8 @@ export default class FiltersSearch {
             case 'ingredients':
                 originalItems = await this.getDatas.getIngredients();
                 break;
-            case 'appareils':
-                originalItems = await this.getDatas.getAppareils();
+            case 'appliance':
+                originalItems = await this.getDatas.getAppliance();
                 break;
             case 'ustensils':
                 originalItems = await this.getDatas.getUstensils();

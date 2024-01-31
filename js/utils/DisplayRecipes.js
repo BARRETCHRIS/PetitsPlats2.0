@@ -21,4 +21,8 @@ export default class DisplayRecipes {
             this.displayRecipe(recipe);
         });
     }
+
+    emptyContainer() {
+        this.container.innerHTML = "";
+    }
 }

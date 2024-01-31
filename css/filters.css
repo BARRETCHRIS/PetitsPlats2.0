@@ -36,7 +36,7 @@
     z-index: 1000;
 }
 
-.appareils{
+.appliance{
     left: 300px;
 }
 
@@ -144,10 +144,18 @@
     margin: 20px 20px 0 0;
     background: var(--primary-color);
     border-radius: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag, .delete_tag{
-    margin: auto 10px auto 17px;
+    margin: auto 10px auto 17px;  
+}
+
+.tag {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag_cross{
