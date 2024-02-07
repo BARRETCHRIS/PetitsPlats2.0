@@ -28,6 +28,8 @@ export default class RecipeCounter {
 
     updateDisplay() {
         const nbrRecipesDiv = document.querySelector('.nbr_recipes');
-        nbrRecipesDiv.textContent = `${this.recipeCount} recettes`;
+        // nbrRecipesDiv.textContent = `${this.recipeCount} recettes`;
+        const recipeLabel = (this.recipeCount === 1) ? 'recette' : 'recettes';
+        nbrRecipesDiv.textContent = `${this.recipeCount} ${recipeLabel}`;
     }
 }

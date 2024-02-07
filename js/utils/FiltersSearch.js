@@ -20,6 +20,12 @@ export default class FiltersSearch {
             input.addEventListener('input', () => {
                 this.handleInputChange(form);
             });
+
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Bloque l'action par défaut de la touche Entrée
+                }
+            });
         });
     }
 

@@ -7,9 +7,8 @@ import Search from "./utils/MainSearch.js";
 
 import ToggleFormChevron from "./utils/ToggleFormChevron.js";
 
-// OTHER TEST CALCUL NBR RECETTES
 import RecipeCounter from "./utils/RecipeCounter.js";
-// FIN OTHER TEST CALCUL NBR RECETTES
+
 class App {
     constructor() {
         this.getDatas = new GetDatasApi('datas/recipes.json');
@@ -21,9 +20,7 @@ class App {
 
         this.tagsList = [];
         this.recipes = []; 
-        // OTHER TEST CALCUL NBR RECETTES
         this.recipeCounter = new RecipeCounter('.display_recipes');
-        // FIN OTHER TEST CALCUL NBR RECETTES
 
         // Ajout des gestionnaires d'événements
         document.addEventListener('tagsUpdated', async () => {
@@ -60,7 +57,6 @@ class App {
         if (this.tagsList.length === 0) {
             this.recipes = await this.getDatas.getAllRecipes();
         }else {
-            // this.recipes =[];
             this.recipes = this.filterRecipesByTags(this.tagsList);
         }
 
@@ -95,7 +91,6 @@ class App {
     }
 
     async main() {
-        // const recipes = await this.getDatas.getAllRecipes();
         await this.initializeRecipes();
         // this.displayRecipes.displayAllRecipes(this.recipes); !!!!! 3 JOURS DE GALERES !!!!!
 
@@ -108,10 +103,8 @@ class App {
         const ustensils = this.getDatas.getUstensils();
         this.displayFilters.displayFilterItems('ustensils', ustensils, 'ustensils_form');
 
-        // OTHER TEST CALCUL NBR RECETTES
         // Initialise RecipeCounter après avoir affiché toutes les recettes
         this.recipeCounter.updateRecipeCount();
-        // FIN OTHER TEST CALCUL NBR RECETTES
 
         // Utilisez les données comme nécessaire
         // console.log(recipes);
