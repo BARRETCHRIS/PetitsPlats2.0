@@ -1,12 +1,51 @@
 import TagTemplate from "../templates/TagTemplate.js";
 export default class DisplayTags {
-    constructor(containerSelector, listIds) {
+    // constructor(containerSelector, listIds) {
+    //     this.container = document.querySelector(containerSelector);
+    //     this.listIds = listIds;
+    //     this.tags = [];
+    // }
+    constructor(containerSelector) {
         this.container = document.querySelector(containerSelector);
-        this.listIds = listIds;
         this.tags = [];
     }
 
-    createTag(tagName, listItem, nameList) {
+    // createTag(tagName, listItem, nameList) {
+    //     const existingTag = this.getTagByName(tagName);
+
+    //     if (!existingTag) {
+    //         const tagHTML = TagTemplate.generateHTML(tagName);
+    //         const tagElement = document.createElement('div');
+    //         tagElement.innerHTML = tagHTML;
+    //         this.container.appendChild(tagElement);
+
+    //         const deleteButton = tagElement.querySelector('.delete_tag');
+    //         deleteButton.addEventListener('click', () => {
+    //             this.deleteTag(tagName, listItem);
+    //         });
+
+    //         const filterType = this.getFilterTypeFromListItem(listItem);
+
+    //         this.tags.push({
+    //             tagName: tagName,
+    //             listItem: listItem,
+    //             tagElement: tagElement,
+    //             nameList: filterType
+    //         });
+
+    //         // Ajoute la classe 'selected' et modifie l'attribut 'aria-checked'
+    //         listItem.classList.add('selected');
+    //         listItem.setAttribute('aria-checked', 'true');
+    //     }
+
+    //     // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
+    //     document.dispatchEvent(new Event('tagsUpdated'));
+
+    //     // Retourne les tags après chaque mise à jour
+    //     return this.tags;
+    // }
+
+    createTag(tagName) {
         const existingTag = this.getTagByName(tagName);
 
         if (!existingTag) {
@@ -17,10 +56,8 @@ export default class DisplayTags {
 
             const deleteButton = tagElement.querySelector('.delete_tag');
             deleteButton.addEventListener('click', () => {
-                this.deleteTag(tagName, listItem);
+                this.deleteTag(tagName);
             });
-
-            const filterType = this.getFilterTypeFromListItem(listItem);
 
             this.tags.push({
                 tagName: tagName,
@@ -28,10 +65,6 @@ export default class DisplayTags {
                 tagElement: tagElement,
                 nameList: filterType
             });
-
-            // Ajoute la classe 'selected' et modifie l'attribut 'aria-checked'
-            listItem.classList.add('selected');
-            listItem.setAttribute('aria-checked', 'true');
         }
 
         // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
@@ -41,18 +74,33 @@ export default class DisplayTags {
         return this.tags;
     }
 
-    deleteTag(tagName, listItem) {
-        const tagInfoIndex = this.tags.findIndex(tag => tag.tagName === tagName && tag.listItem === listItem);
+    // deleteTag(tagName, listItem) {
+    //     const tagInfoIndex = this.tags.findIndex(tag => tag.tagName === tagName && tag.listItem === listItem);
+    //     if (tagInfoIndex !== -1) {
+    //         const tagInfo = this.tags[tagInfoIndex];
+    //         this.container.removeChild(tagInfo.tagElement);
+
+    //         // Utilisez splice pour supprimer l'élément à l'index correspondant
+    //         this.tags.splice(tagInfoIndex, 1);
+
+    //         // Supprime la classe 'selected' et modifiez l'attribut 'aria-checked'
+    //         listItem.classList.remove('selected');
+    //         listItem.setAttribute('aria-checked', 'false');
+    //     }
+    //     // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
+    //     document.dispatchEvent(new Event('tagsUpdated'));
+
+    //     // Retourne les tags après chaque mise à jour
+    //     return this.tags;
+    // }
+    deleteTag(tagName) {
+        const tagInfoIndex = this.tags.findIndex(tag => tag.tagName === tagName);
         if (tagInfoIndex !== -1) {
             const tagInfo = this.tags[tagInfoIndex];
             this.container.removeChild(tagInfo.tagElement);
 
             // Utilisez splice pour supprimer l'élément à l'index correspondant
             this.tags.splice(tagInfoIndex, 1);
-
-            // Supprime la classe 'selected' et modifiez l'attribut 'aria-checked'
-            listItem.classList.remove('selected');
-            listItem.setAttribute('aria-checked', 'false');
         }
         // Ajoute l'émission de l'événement 'tagsUpdated' après chaque modification des tags
         document.dispatchEvent(new Event('tagsUpdated'));

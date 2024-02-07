@@ -1,11 +1,15 @@
 import FilterTemplate from "../templates/FilterTemplate.js";
-import DisplayTags from "./DisplayTags.js";
+// import DisplayTags from "./DisplayTags.js";
 
 
 export default class DisplayFiltersItems {
-    constructor(containerSelector) {
+    // constructor(containerSelector) {
+    //     this.container = document.querySelector(containerSelector);
+    //     this.displayTags = new DisplayTags('.filters_tags', ['ingredients', 'appliance', 'ustensiles']);
+    // }
+    constructor(containerSelector, displayTags) {
         this.container = document.querySelector(containerSelector);
-        this.displayTags = new DisplayTags('.filters_tags', ['ingredients', 'appliance', 'ustensiles']);
+        this.displayTags = displayTags;
     }
 
     displayFilterItems(filterType, items, parentFormId) {
@@ -19,10 +23,18 @@ export default class DisplayFiltersItems {
 
         filterContainer.insertAdjacentElement('afterend', filterList);
 
+        // filterList.querySelectorAll('li').forEach((listItem) => {
+        //     listItem.addEventListener('click', () => {
+        //         const tagName = listItem.textContent;
+        //         const updatedTags = this.displayTags.createTag(tagName, listItem);
+        //         return updatedTags;
+        //     });
+        // });
         filterList.querySelectorAll('li').forEach((listItem) => {
             listItem.addEventListener('click', () => {
                 const tagName = listItem.textContent;
-                const updatedTags = this.displayTags.createTag(tagName, listItem);
+                const updatedTags = this.displayTags.createTag(tagName);
+                console.log(updatedTags);
                 return updatedTags;
             });
         });
@@ -38,9 +50,9 @@ export default class DisplayFiltersItems {
         });
     }
 
-    getTagsList() {
-        const tagsList = this.displayTags.getTags();
-        // console.log(tagsList);
-        return tagsList;
-    }
+    // getTagsList() {
+    //     const tagsList = this.displayTags.getTags();
+    //     // console.log(tagsList);
+    //     return tagsList;
+    // }
 }

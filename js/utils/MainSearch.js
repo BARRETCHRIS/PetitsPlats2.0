@@ -100,8 +100,6 @@ export default class Search {
         );
     }
 
-
-
     toggleClearButtonVisibility(value) {
         // Affiche/masque la croix en fonction de la présence de texte dans l'input
         const clearButton = document.querySelector('.main_search_cross');

@@ -1,5 +1,8 @@
 import GetDatasApi from "./api/GetDatasApi.js";
 import DisplayRecipes from './utils/DisplayRecipes.js';
+
+import DisplayTags from "./utils/DisplayTags.js";
+
 import DisplayFiltersItems from './utils/DisplayFiltersItems.js';
 import FiltersSearch from "./utils/FiltersSearch.js";
 
@@ -13,7 +16,12 @@ class App {
     constructor() {
         this.getDatas = new GetDatasApi('datas/recipes.json');
         this.displayRecipes = new DisplayRecipes('.display_recipes');
-        this.displayFilters = new DisplayFiltersItems();
+
+        this.displayTags = new DisplayTags('.filters_tags');
+
+        // this.displayFilters = new DisplayFiltersItems();
+        this.displayFilters = new DisplayFiltersItems('.filters_search', this.displayTags);
+
         this.filtersSearch = new FiltersSearch(this.getDatas, this.displayFilters);
 
         this.search = new Search(this.getDatas, this.displayRecipes);
@@ -37,7 +45,8 @@ class App {
 
     async getAndLogTagsList() {
         // Attend la mise à jour des tags
-        this.tagsList = this.displayFilters.getTagsList();
+        // this.tagsList = this.displayFilters.getTagsList();
+        this.tagsList = this.displayTags.getTags();
 
         // Ajoute l'écouteur d'événement à l'intérieur de la fonction
         this.tagsListUpdate = document.addEventListener('tagsUpdated', async () => {
@@ -67,6 +76,28 @@ class App {
         console.log('Tableau tags',this.tagsList);
     }
 
+    // filterRecipesByTags(tagsList) {
+    //     // Copie les recettes initiales pour ne pas modifier l'objet d'origine
+    //     let filteredRecipes = [...this.getDatas.recipes];
+    //     console.log('Recettes filtrées copie init', filteredRecipes);
+
+    //     tagsList.forEach(tag => {
+    //         filteredRecipes = filteredRecipes.filter(recipe => {
+    //             if (tag.nameList === 'ingredients') {
+    //                 const hasIngredient = recipe.ingredients.some(ingredient => ingredient.ingredient === tag.tagName);
+    //                 console.log(`Recipe "${recipe.name}" has ingredient "${tag.tagName}": ${hasIngredient}`);
+    //                 return hasIngredient;
+    //             } else {
+    //                 const hasTag = recipe[tag.nameList].includes(tag.tagName);
+    //                 console.log(`Recipe "${recipe.name}" has tag "${tag.tagName}" in ${tag.nameList}: ${hasTag}`);
+    //                 return hasTag;
+    //             }
+    //         });
+    //     });
+
+    //     console.log('Number of recipes after filtering:', filteredRecipes.length);
+    //     return filteredRecipes;
+    // }
     filterRecipesByTags(tagsList) {
         // Copie les recettes initiales pour ne pas modifier l'objet d'origine
         let filteredRecipes = [...this.getDatas.recipes];
@@ -75,11 +106,11 @@ class App {
         tagsList.forEach(tag => {
             filteredRecipes = filteredRecipes.filter(recipe => {
                 if (tag.nameList === 'ingredients') {
-                    const hasIngredient = recipe.ingredients.some(ingredient => ingredient.ingredient === tag.tagName);
+                    const hasIngredient = recipe.ingredients && recipe.ingredients.some(ingredient => ingredient.ingredient === tag.tagName);
                     console.log(`Recipe "${recipe.name}" has ingredient "${tag.tagName}": ${hasIngredient}`);
                     return hasIngredient;
                 } else {
-                    const hasTag = recipe[tag.nameList].includes(tag.tagName);
+                    const hasTag = recipe[tag.nameList] && recipe[tag.nameList].includes(tag.tagName);
                     console.log(`Recipe "${recipe.name}" has tag "${tag.tagName}" in ${tag.nameList}: ${hasTag}`);
                     return hasTag;
                 }
@@ -89,6 +120,7 @@ class App {
         console.log('Number of recipes after filtering:', filteredRecipes.length);
         return filteredRecipes;
     }
+    
 
     async main() {
         await this.initializeRecipes();
