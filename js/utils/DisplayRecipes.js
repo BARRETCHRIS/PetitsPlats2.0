@@ -5,7 +5,7 @@ export default class DisplayRecipes {
         this.container = document.querySelector(containerSelector);
     }
 
-    displayRecipe(recipe) {
+    displayRecipeCard(recipe) {
         const recipeTemplate = new RecipeTemplate(recipe);
         const articleContent = recipeTemplate.generateHTML();
 
@@ -16,9 +16,9 @@ export default class DisplayRecipes {
         this.container.appendChild(recipeArticle);
     }
 
-    displayAllRecipes(recipes) {
+    displayRecipes(recipes) {
         recipes.forEach(recipe => {
-            this.displayRecipe(recipe);
+            this.displayRecipeCard(recipe);
         });
     }
 

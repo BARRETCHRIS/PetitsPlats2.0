@@ -1,41 +1,44 @@
 import GetDatasApi from "./api/GetDatasApi.js";
-import DisplayRecipes from './utils/DisplayRecipes.js';
-
-import DisplayTags from "./utils/DisplayTags.js";
-
-import DisplayFiltersItems from './utils/DisplayFiltersItems.js';
-import FiltersSearch from "./utils/FiltersSearch.js";
-
-import Search from "./utils/MainSearch.js";
-
 import ToggleFormChevron from "./utils/ToggleFormChevron.js";
-
 import RecipeCounter from "./utils/RecipeCounter.js";
+import FiltersSearchManager from "./utils/FiltersSearchManager.js";
+
+// Importez la classe DisplayFiltersItems depuis votre fichier approprié
+import DisplayFiltersItems from "./utils/DisplayFiltersItems.js";
 
 class App {
     constructor() {
         this.getDatas = new GetDatasApi('datas/recipes.json');
-        this.displayRecipes = new DisplayRecipes('.display_recipes');
 
-        this.displayTags = new DisplayTags('.filters_tags');
+        // Créez des instances de DisplayFiltersItems pour chaque type de filtre
+        this.displayFiltersItemsIngredients = new DisplayFiltersItems('ingredients_list', 'ingredients');
+        this.displayFiltersItemsAppliance = new DisplayFiltersItems('appliance_list', 'appliance');
+        this.displayFiltersItemsUstensils = new DisplayFiltersItems('ustensils_list', 'ustensils');
 
-        // this.displayFilters = new DisplayFiltersItems();
-        this.displayFilters = new DisplayFiltersItems('.filters_search', this.displayTags);
-
-        this.filtersSearch = new FiltersSearch(this.getDatas, this.displayFilters);
-
-        this.search = new Search(this.getDatas, this.displayRecipes);
-
-        this.tagsList = [];
-        this.recipes = []; 
-        this.recipeCounter = new RecipeCounter('.display_recipes');
-
-        // Ajout des gestionnaires d'événements
-        document.addEventListener('tagsUpdated', async () => {
-            // Met à jour la liste des tags lorsque l'événement est émis
-            await this.getAndLogTagsList();
-            await this.initializeRecipes(); 
+        // Passez ces instances à la classe FiltersSearchManager lors de son instanciation
+        this.filtersSearchManager = new FiltersSearchManager(this.getDatas, {
+            ingredients: this.displayFiltersItemsIngredients,
+            appliance: this.displayFiltersItemsAppliance,
+            ustensils: this.displayFiltersItemsUstensils
         });
+
+        // Ajoutez ces lignes pour écouter les événements personnalisés
+        document.addEventListener('update', (event) => {
+            const { type, updatedItems } = event.detail;
+            this.handleUpdateEvent(type, updatedItems);
+        });
+
+        this.ingredients = [];
+        this.appliance = [];
+        this.ustensils = [];
+        this.tagsList = [];
+        this.recipes = [];
+
+        this.updatedIngredients = [];
+        this.updatedAppliance = [];
+        this.updatedUstensils = [];
+
+        this.recipeCounter = new RecipeCounter('.display_recipes');
 
         // Ajout des gestionnaires de clic aux chevrons en utilisant ToggleFormChevron
         ToggleFormChevron.addToggleEventListener("ingredients_chevron", "ingredients_form", "ingredients_chevron");
@@ -43,107 +46,31 @@ class App {
         ToggleFormChevron.addToggleEventListener("ustensils_chevron", "ustensils_form", "ustensils_chevron");
     }
 
-    async getAndLogTagsList() {
-        // Attend la mise à jour des tags
-        // this.tagsList = this.displayFilters.getTagsList();
-        this.tagsList = this.displayTags.getTags();
-
-        // Ajoute l'écouteur d'événement à l'intérieur de la fonction
-        this.tagsListUpdate = document.addEventListener('tagsUpdated', async () => {
-            // Met à jour la liste des tags lorsque l'événement est émis
-            await this.getAndLogTagsList();
-            console.log('Calling filterRecipesByTags from tagsUpdated event');
-            this.filterRecipesByTags(this.tagsList);
-        });
-        console.log('Tableau tag à jour', this.tagsList);
-        console.log('Taille tableau tag à jour',this.tagsList.length);   
-    }
-
     async initializeRecipes() {
-        console.log('initializeRecipes called');
-
-        // Initialise le tableau des recettes uniquement si tagsList est vide
-        if (this.tagsList.length === 0) {
-            this.recipes = await this.getDatas.getAllRecipes();
-        }else {
-            this.recipes = this.filterRecipesByTags(this.tagsList);
-        }
-
-        this.displayRecipes.emptyContainer();
-        this.displayRecipes.displayAllRecipes(this.recipes);
-        
-        console.log('Tableau recette à jour',this.recipes);
-        console.log('Tableau tags',this.tagsList);
+        this.recipes = await this.getDatas.getAllRecipes();
     }
-
-    // filterRecipesByTags(tagsList) {
-    //     // Copie les recettes initiales pour ne pas modifier l'objet d'origine
-    //     let filteredRecipes = [...this.getDatas.recipes];
-    //     console.log('Recettes filtrées copie init', filteredRecipes);
-
-    //     tagsList.forEach(tag => {
-    //         filteredRecipes = filteredRecipes.filter(recipe => {
-    //             if (tag.nameList === 'ingredients') {
-    //                 const hasIngredient = recipe.ingredients.some(ingredient => ingredient.ingredient === tag.tagName);
-    //                 console.log(`Recipe "${recipe.name}" has ingredient "${tag.tagName}": ${hasIngredient}`);
-    //                 return hasIngredient;
-    //             } else {
-    //                 const hasTag = recipe[tag.nameList].includes(tag.tagName);
-    //                 console.log(`Recipe "${recipe.name}" has tag "${tag.tagName}" in ${tag.nameList}: ${hasTag}`);
-    //                 return hasTag;
-    //             }
-    //         });
-    //     });
-
-    //     console.log('Number of recipes after filtering:', filteredRecipes.length);
-    //     return filteredRecipes;
-    // }
-    filterRecipesByTags(tagsList) {
-        // Copie les recettes initiales pour ne pas modifier l'objet d'origine
-        let filteredRecipes = [...this.getDatas.recipes];
-        console.log('Recettes filtrées copie init', filteredRecipes);
-
-        tagsList.forEach(tag => {
-            filteredRecipes = filteredRecipes.filter(recipe => {
-                if (tag.nameList === 'ingredients') {
-                    const hasIngredient = recipe.ingredients && recipe.ingredients.some(ingredient => ingredient.ingredient === tag.tagName);
-                    console.log(`Recipe "${recipe.name}" has ingredient "${tag.tagName}": ${hasIngredient}`);
-                    return hasIngredient;
-                } else {
-                    const hasTag = recipe[tag.nameList] && recipe[tag.nameList].includes(tag.tagName);
-                    console.log(`Recipe "${recipe.name}" has tag "${tag.tagName}" in ${tag.nameList}: ${hasTag}`);
-                    return hasTag;
-                }
-            });
-        });
-
-        console.log('Number of recipes after filtering:', filteredRecipes.length);
-        return filteredRecipes;
-    }
-    
 
     async main() {
         await this.initializeRecipes();
-        // this.displayRecipes.displayAllRecipes(this.recipes); !!!!! 3 JOURS DE GALERES !!!!!
 
-        const ingredients = this.getDatas.getIngredients();
-        this.displayFilters.displayFilterItems('ingredients', ingredients, 'ingredients_form');
-
-        const appliance = this.getDatas.getAppliance();
-        this.displayFilters.displayFilterItems('appliance', appliance, 'appliance_form');
-
-        const ustensils = this.getDatas.getUstensils();
-        this.displayFilters.displayFilterItems('ustensils', ustensils, 'ustensils_form');
+        this.ingredients = await this.getDatas.getIngredients();
+        this.appliance = await this.getDatas.getAppliance();
+        this.ustensils = await this.getDatas.getUstensils();
 
         // Initialise RecipeCounter après avoir affiché toutes les recettes
         this.recipeCounter.updateRecipeCount();
 
         // Utilisez les données comme nécessaire
-        // console.log(recipes);
-        // console.log(ingredients);
-        // console.log(appliance);
-        // console.log(ustensils);    
+        console.log("Ingredients:", this.ingredients);
+        console.log("Appliance:", this.appliance);
+        console.log("Ustensils:", this.ustensils);
+
+        // Ajoutez cet appel pour charger les éléments au moment de l'initialisation
+        this.filtersSearchManager.loadAllItems();
     }
+
+    // Ajoutez cet appel pour charger les éléments au moment de l'initialisation
+    
 }
 
 const app = new App();

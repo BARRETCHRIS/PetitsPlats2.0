@@ -31,6 +31,7 @@ export default class Search {
                 // Sinon, masque le message d'erreur
                 this.errorMessageElement.style.display = 'none';
             }
+
         });
 
         // Ajoute un gestionnaire d'événements à l'input main_search pour afficher/masquer la croix
@@ -72,27 +73,27 @@ export default class Search {
             // Affiche les recettes correspondantes si la recherche a produit un résultat
             if (matchingRecipes.length > 0) {
                 this.displayRecipes.emptyContainer();
-                this.displayRecipes.displayAllRecipes(matchingRecipes);
+                this.displayRecipes.displayRecipes(matchingRecipes);
             } else {
                 // Si la recherche n'a produit aucun résultat, affiche toutes les recettes
                 this.displayRecipes.emptyContainer();
-                this.displayRecipes.displayAllRecipes(this.getDatas.recipes);
+                this.displayRecipes.displayRecipes(this.getDatas.recipes);
             }
 
-            return matchingRecipes; // Ajoute cette ligne pour retourner le résultat de la recherche
+            return matchingRecipes; // retourne le résultat de la recherche
         } else {
             // Si la longueur de la requête est inférieure à 3 caractères, affiche toutes les recettes
             this.displayRecipes.emptyContainer();
-            this.displayRecipes.displayAllRecipes(this.getDatas.recipes);
+            this.displayRecipes.displayRecipes(this.getDatas.recipes);
 
             return []; // Ajoute cette ligne pour retourner un tableau vide
         }
     }
 
-    searchRecipes(searchWords) {
+    searchRecipes(filtredSearchWords) {
         // Filtre les recettes qui correspondent à tous les mots de la recherche dans les éléments name, ingredients et description
         return this.getDatas.recipes.filter(recipe =>
-            searchWords.every(word =>
+            filtredSearchWords.every(word =>
                 recipe.name.toLowerCase().includes(word) ||
                 recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(word)) ||
                 recipe.description.toLowerCase().includes(word)

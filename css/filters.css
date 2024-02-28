@@ -99,7 +99,7 @@
     stroke: inherit;
 }
 
-.filter-error-message{
+.error_message, .selected{
     background: var(--primary-color);
 }
 
@@ -109,10 +109,6 @@
     margin: 0; 
     padding: 0;
     scrollbar-width: none;
-}
-
-.selected {
-    background: var(--primary-color);
 }
 
 .list_scroll::-webkit-scrollbar {
