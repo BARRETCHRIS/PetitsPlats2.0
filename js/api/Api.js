@@ -11,6 +11,7 @@ export default class Api {
     async fetch() {
         try {
             const response = await fetch(this._url);
+            console.log(this._url)
             const datas = await response.json();
             // console.log(datas);
             return datas; 

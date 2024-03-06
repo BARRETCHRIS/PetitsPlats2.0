@@ -71,3 +71,72 @@ export default class GetDatasApi extends Api {
         return Array.from(ustensils);
     }
 }
+
+
+// // Importez directement les données depuis le fichier recipes.js
+// import recipesData from './datas/recipes.js';
+
+// export default class GetDatasApi {
+//     constructor() {
+//         this.recipes = recipesData;
+//     }
+
+//     async getAllRecipes() {
+//         return this.recipes;
+//     }
+
+//     normalizeWords(words) {
+//         const normalizedWords = [];
+
+//         words.forEach(word => {
+//             normalizedWords.push(word.toLowerCase());
+//         });
+
+//         return normalizedWords;
+//     }
+
+//     getIngredients() {
+//         const ingredients = new Set();
+
+//         this.recipes.forEach(recipe => {
+//             const normalizedIngredients = [];
+//             recipe.ingredients.forEach(ingredient => {
+//                 this.normalizeWords([ingredient.ingredient]).forEach(normalizedIngredient => {
+//                     normalizedIngredients.push(normalizedIngredient);
+//                 });
+//             });
+
+//             normalizedIngredients.forEach(ingredient => {
+//                 ingredients.add(ingredient);
+//             });
+//         });
+
+//         return Array.from(ingredients);
+//     }
+
+//     getAppliance() {
+//         const appliance = new Set();
+
+//         this.recipes.forEach(recipe => {
+//             const normalizedAppliance = this.normalizeWords([recipe.appliance]);
+//             normalizedAppliance.forEach(app => {
+//                 appliance.add(app);
+//             });
+//         });
+
+//         return Array.from(appliance);
+//     }
+
+//     getUstensils() {
+//         const ustensils = new Set();
+
+//         this.recipes.forEach(recipe => {
+//             const normalizedUstensils = this.normalizeWords(recipe.ustensils);
+//             normalizedUstensils.forEach(ustensil => {
+//                 ustensils.add(ustensil);
+//             });
+//         });
+
+//         return Array.from(ustensils);
+//     }
+// }

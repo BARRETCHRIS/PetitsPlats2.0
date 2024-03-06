@@ -1,32 +1,21 @@
 import GetDatasApi from "./api/GetDatasApi.js";
 import ToggleFormChevron from "./utils/ToggleFormChevron.js";
 import RecipeCounter from "./utils/RecipeCounter.js";
+import InputsManager from "./utils/InputsManager.js";
 import FiltersSearchManager from "./utils/FiltersSearchManager.js";
-
-// Importez la classe DisplayFiltersItems depuis votre fichier approprié
-import DisplayFiltersItems from "./utils/DisplayFiltersItems.js";
+import DisplayFiltersItems from './utils/DisplayFiltersItems.js';
 
 class App {
     constructor() {
         this.getDatas = new GetDatasApi('datas/recipes.json');
+        this.inputsManager = new InputsManager();
 
-        // Créez des instances de DisplayFiltersItems pour chaque type de filtre
-        this.displayFiltersItemsIngredients = new DisplayFiltersItems('ingredients_list', 'ingredients');
-        this.displayFiltersItemsAppliance = new DisplayFiltersItems('appliance_list', 'appliance');
-        this.displayFiltersItemsUstensils = new DisplayFiltersItems('ustensils_list', 'ustensils');
-
-        // Passez ces instances à la classe FiltersSearchManager lors de son instanciation
-        this.filtersSearchManager = new FiltersSearchManager(this.getDatas, {
-            ingredients: this.displayFiltersItemsIngredients,
-            appliance: this.displayFiltersItemsAppliance,
-            ustensils: this.displayFiltersItemsUstensils
-        });
-
-        // Ajoutez ces lignes pour écouter les événements personnalisés
-        document.addEventListener('update', (event) => {
-            const { type, updatedItems } = event.detail;
-            this.handleUpdateEvent(type, updatedItems);
-        });
+        this.values = {
+            main: '',
+            ingredients: '',
+            appliance: '',
+            ustensils: '',
+        };
 
         this.ingredients = [];
         this.appliance = [];
@@ -34,44 +23,75 @@ class App {
         this.tagsList = [];
         this.recipes = [];
 
-        this.updatedIngredients = [];
-        this.updatedAppliance = [];
-        this.updatedUstensils = [];
-
         this.recipeCounter = new RecipeCounter('.display_recipes');
 
-        // Ajout des gestionnaires de clic aux chevrons en utilisant ToggleFormChevron
-        ToggleFormChevron.addToggleEventListener("ingredients_chevron", "ingredients_form", "ingredients_chevron");
-        ToggleFormChevron.addToggleEventListener("appliance_chevron", "appliance_form", "appliance_chevron");
-        ToggleFormChevron.addToggleEventListener("ustensils_chevron", "ustensils_form", "ustensils_chevron");
+        ToggleFormChevron.addToggleEventListener("ingredients_chevron", "ingredients_form", "ingredients_search", "visible_cross");
+        ToggleFormChevron.addToggleEventListener("appliance_chevron", "appliance_form", "appliance_search", "visible_cross");
+        ToggleFormChevron.addToggleEventListener("ustensils_chevron", "ustensils_form", "ustensils_search", "visible_cross");
+
+        ['main', 'ingredients', 'appliance', 'ustensils'].forEach((type) => {
+            document.addEventListener(`${type}ValueChanged`, (event) => {
+                this.values[type] = event.detail;
+                this.handleValueChanged(type);
+            });
+        });
+
+        this.filtersSearchManager = new FiltersSearchManager(this.inputsManager, this.getDatas);
+
+        this.displayFiltersItemsIngredients = new DisplayFiltersItems('ingredients_search', 'ingredients', this.filtersSearchManager);
+        this.displayFiltersItemsAppliance = new DisplayFiltersItems('appliance_search', 'appliance', this.filtersSearchManager);
+        this.displayFiltersItemsUstensils = new DisplayFiltersItems('ustensils_search', 'ustensils', this.filtersSearchManager);
+
+        this.initializeFilters();
     }
 
     async initializeRecipes() {
         this.recipes = await this.getDatas.getAllRecipes();
     }
 
+    async initializeFilters() {
+        await this.filtersSearchManager.initializeFilters();
+
+        // Afficher les éléments des filtres au lancement
+        this.displayFiltersItemsIngredients.displayFilterItems(this.filtersSearchManager.ingredientsListUpdated);
+        this.displayFiltersItemsAppliance.displayFilterItems(this.filtersSearchManager.applianceListUpdated);
+        this.displayFiltersItemsUstensils.displayFilterItems(this.filtersSearchManager.ustensilsListUpdated);
+    }
+
     async main() {
         await this.initializeRecipes();
 
-        this.ingredients = await this.getDatas.getIngredients();
-        this.appliance = await this.getDatas.getAppliance();
-        this.ustensils = await this.getDatas.getUstensils();
-
-        // Initialise RecipeCounter après avoir affiché toutes les recettes
         this.recipeCounter.updateRecipeCount();
-
-        // Utilisez les données comme nécessaire
-        console.log("Ingredients:", this.ingredients);
-        console.log("Appliance:", this.appliance);
-        console.log("Ustensils:", this.ustensils);
-
-        // Ajoutez cet appel pour charger les éléments au moment de l'initialisation
-        this.filtersSearchManager.loadAllItems();
     }
 
-    // Ajoutez cet appel pour charger les éléments au moment de l'initialisation
-    
+    handleValueChanged(type) {
+        // Mise à jour des filtres lorsqu'une valeur change
+        this.filtersSearchManager.checkLengthAndForbiddenCharacters(
+            `${type}Value`,
+            this.values[type]
+        );
+
+        // Afficher les éléments filtrés
+        switch (type) {
+            case 'ingredients':
+                this.displayFiltersItemsIngredients.displayFilterItems(this.filtersSearchManager.ingredientsListUpdated);
+                break;
+
+            case 'appliance':
+                this.displayFiltersItemsAppliance.displayFilterItems(this.filtersSearchManager.applianceListUpdated);
+                break;
+
+            case 'ustensils':
+                this.displayFiltersItemsUstensils.displayFilterItems(this.filtersSearchManager.ustensilsListUpdated);
+                break;
+
+            default:
+                break;
+        }
+    }
 }
 
-const app = new App();
-app.main();
+document.addEventListener('DOMContentLoaded', () => {
+    const app = new App();
+    app.main();
+});
