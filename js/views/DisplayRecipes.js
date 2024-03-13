@@ -7,7 +7,7 @@ export default class DisplayRecipes {
 
     displayRecipeCard(recipe) {
         const recipeTemplate = new RecipeTemplate(recipe);
-        const articleContent = recipeTemplate.generateHTML();
+        const articleContent = recipeTemplate.renderRecipeCard();
 
         const recipeArticle = document.createElement('article');
         recipeArticle.classList.add('recipe_card');

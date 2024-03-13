@@ -3,9 +3,9 @@ export default class RecipeTemplate {
         this.recipe = recipe;
     }
 
-    generateHTML() {
-        const articleContent = document.createElement('div');
-        articleContent.innerHTML = `
+    renderRecipeCard() {
+        const cardContent = document.createElement('div');
+        return cardContent.innerHTML = `
             <div class="recipe_time">${this.recipe.time} min</div>
             <div class="recipe_img_wrap">
                 <img src="assets/imagesPlats/${this.recipe.image}" alt="" class="recipe_img">
@@ -29,6 +29,5 @@ export default class RecipeTemplate {
                 </div>
             </div>
         `;
-        return articleContent;
     }
 }

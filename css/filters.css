@@ -101,6 +101,7 @@
 
 .error_message, .selected{
     background: var(--primary-color);
+    padding: 0 2px;
 }
 
 .list_scroll {

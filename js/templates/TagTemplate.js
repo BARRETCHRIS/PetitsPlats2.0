@@ -3,7 +3,7 @@ export default class TagTemplate {
         this.tagName = tagName;
     }
 
-    static generateHTML(tagName) {
+    renderTagCard(tagName) {
         return `
             <div class="tag_wrap">
                 <span class="tag">${tagName}</span>
