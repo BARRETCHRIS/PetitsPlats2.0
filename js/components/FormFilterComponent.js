@@ -31,6 +31,12 @@ export default class FormFilterComponent {
     }
 
     initializeEventListeners() {
+        // Ajouter l'écouteur d'événement pour les valeurs filtrées changées
+        document.addEventListener('FilteredValuesChanged', (event) => {
+            const { type, values } = event.detail;
+            // Mettre à jour l'affichage en fonction du type de filtre et des nouvelles valeurs
+        });
+
         addEventListener('OpenFormEvent', () => {
             this.closeForm();
         });
