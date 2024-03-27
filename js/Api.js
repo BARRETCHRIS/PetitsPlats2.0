@@ -10,6 +10,7 @@ export default class Api {
     }
 
     getAllRecipes() {
+        // console.log(recipes);
         return recipes;
     }
 
@@ -45,5 +46,18 @@ export default class Api {
             });
         });
         return Array.from(ustensils);
+    }
+
+    getItemsByType(type) {
+        switch (type) {
+            case 'ingredients':
+                return this.getAllIngredients();
+            case 'appliance':
+                return this.getAllAppliances();
+            case 'ustensils':
+                return this.getAllUstensils();
+            default:
+                console.error('Type de filtre non reconnu');
+        }
     }
 }

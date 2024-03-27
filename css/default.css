@@ -76,7 +76,7 @@ header {
     font-size: 44px;
 }
 
-.main_search_wrap{
+/* .main_search_wrap{
     width: 100%;
     max-width: 950px;
     height: 75px;
@@ -84,6 +84,24 @@ header {
     padding: 0 10px;
     background: var(--elements-bg-color);
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+} */
+
+.main_search_wrap{
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+    padding: 0 10px;
+    background: var(--elements-bg-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main_btn_wrap{
+    height: 75px;
     display: flex;
     justify-content: space-between;
 }

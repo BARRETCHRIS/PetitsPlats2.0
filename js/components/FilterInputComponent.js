@@ -18,23 +18,23 @@ export default class FilterInputComponent {
     checkValue(){
         const inputValue = this.inputElement.value.trim();
         const isValidLength = inputValue.length > 2;
-        
+
         if (!isValidLength) {
             this.hideErrorMessage();
             this.filteredValues = []; // Réinitialise les valeurs filtrées
             return true;
         }
-        
+
         const forbiddenCharactersRegex = /[<>+=!@#$%^&*(),.?":{}|<>]/;
         const isValidInput = !forbiddenCharactersRegex.test(inputValue);
-        
+
         if (!isValidInput) {
             this.showErrorMessage();
             this.filteredValues = []; // Réinitialise les valeurs filtrées
         } else {
             this.hideErrorMessage();
         }
-        
+
         return isValidInput;
     }
 
@@ -52,25 +52,13 @@ export default class FilterInputComponent {
         try {
             const inputValue = this.inputElement.value.trim();
             if (inputValue.length > 2) {
-                switch (this.type) {
-                    case 'ingredients':
-                        this.filteredValues = DatasApi.getAllIngredients();
-                        break;
-                    case 'appliance':
-                        this.filteredValues = DatasApi.getAllAppliances();
-                        break;
-                    case 'ustensils':
-                        this.filteredValues = DatasApi.getAllUstensils();
-                        break;
-                    default:
-                        console.error('Type de filtre non reconnu');
-                        break;
-                }
-
+                this.filteredValues = DatasApi.getItemsByType(this.type);
                 this.filteredValues = this.filteredValues.filter(val => val.includes(value));
                 console.log(this.filteredValues);
-                document.dispatchEvent(new CustomEvent('FilteredValuesChanged', { detail: { type: this.type, values: this.filteredValues } }));
+            } else {
+                this.filteredValues = DatasApi.getItemsByType(this.type);
             }
+            document.dispatchEvent(new CustomEvent('FilteredValuesChanged', { detail: { type: this.type, values: this.filteredValues } }));
             return this.filteredValues;
         } catch (error) {
             console.error(error);
@@ -96,12 +84,17 @@ export default class FilterInputComponent {
 
     initializeEventListeners() {
         this.inputElement.addEventListener('input', async () => {
-            const inputValue = this.inputElement.value.trim();
+            const inputValue = this.inputElement.value.trim().toLowerCase();
             (inputValue !== '') ? this.crossElement.classList.add('visible_cross') : this.crossElement.classList.remove('visible_cross');
             this.filterInputValue(inputValue); // Filtrage des valeurs à chaque saisie
             this.checkValue(); // Vérification de la valeur saisie
             this.checkFilteredValues(); // Vérifie s'il y a des correspondances
-            
+        });
+        
+        this.inputElement.addEventListener('keydown', (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Empêcher le comportement par défaut
+            }
         });
 
         this.crossElement.addEventListener('click', () => {
