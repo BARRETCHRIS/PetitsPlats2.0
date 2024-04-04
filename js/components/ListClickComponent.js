@@ -1,41 +1,28 @@
-export default class ListClickListClickComponentListener {
+export default class ListClickComponent {
     constructor() {
-        this.selectedValues = []; // Tableau pour stocker toutes les valeurs sélectionnées avec leur type de filtre correspondant
+        // Initialisation des écouteurs d'événements
         this.initializeEventListeners();
     }
 
+    // Ajoute la classe 'selected' à l'élément cliqué
+    addItemToList(itemDetails) {
+        console.log("Item ajouté à la liste :", itemDetails);
+
+        // Met à jour la classe et l'attribut aria-checked de l'élément cliqué
+        const listItem = itemDetails.element;
+        if (listItem) {
+            listItem.classList.add('selected');
+            listItem.setAttribute('aria-checked', 'true');
+        }
+    }
+
+    // Méthode pour initialiser les écouteurs d'événements
     initializeEventListeners() {
-        document.addEventListener('click', event => {
-            const clickedElement = event.target;
-            const listItem = clickedElement.closest('li'); // Trouve l'élément <li> le plus proche
-            if (listItem) {
-                const listParent = listItem.parentElement;
-                const type = listParent.id.replace('_list', ''); // Récupére le type de filtre à partir de l'identifiant de la liste parente
-                const value = listItem.textContent.trim(); // Récupére la valeur du <li>
-
-                // Vérifier si la valeur est déjà sélectionnée
-                const existingItemIndex = this.selectedValues.findIndex(item => item.type === type && item.value === value);
-
-                if (existingItemIndex !== -1) {
-                    // Si la valeur est déjà sélectionnée, la retirer du tableau et enlever la classe "selected"
-                    this.selectedValues.splice(existingItemIndex, 1);
-                    listItem.classList.remove('selected');
-                    listItem.setAttribute('aria-checked', 'false');
-                } else {
-                    // Sinon, ajoute la valeur au tableau et ajouter la classe "selected"
-                    this.selectedValues.push({ type, value });
-                    listItem.classList.add('selected');
-                    listItem.setAttribute('aria-checked', 'true');
-                }
-
-                // Dispatch event to inform other files of the change
-                const selectedValuesEvent = new CustomEvent('SelectedValuesChanged', {
-                    detail: {
-                        values: this.selectedValues
-                    }
-                });
-                document.dispatchEvent(selectedValuesEvent);
-            }
+        // Écoute de l'événement émis par FiltersItemTemplate.js lorsqu'un élément est sélectionné
+        document.addEventListener('ItemListSelected', event => {
+            const { value, type, element } = event.detail;
+            const itemDetails = { value, type, element };
+            this.addItemToList(itemDetails);
         });
     }
 }
@@ -44,79 +31,41 @@ export default class ListClickListClickComponentListener {
 
 // export default class ListClickComponent {
 //     constructor() {
-//         this.selectedValues = []; // Tableau pour stocker toutes les valeurs sélectionnées avec leur type de filtre correspondant
+//         this.clickedItems = []; // Tableau pour enregistrer les éléments cliqués
+
+//         // Initialisation des écouteurs d'événements
 //         this.initializeEventListeners();
 //     }
 
-//     initializeEventListeners() {
-//         document.addEventListener('click', event => {
-//             const clickedElement = event.target;
-//             const listItem = clickedElement.closest('li'); // Trouve l'élément <li> le plus proche
-//             if (listItem) {
-//                 const listParent = listItem.parentElement;
-//                 const type = listParent.id.replace('_list', ''); // Récupére le type de filtre à partir de l'identifiant de la liste parente
-//                 const value = listItem.textContent.trim(); // Récupére la valeur du <li>
+//     // Ajoute un élément cliqué au tableau
+//     addItemToList(itemDetails) {
+//         this.clickedItems.push(itemDetails);
+//         console.log("Item ajouté à la liste :", itemDetails);
+//         console.log(this.clickedItems);
 
-//                 // Vérifier si la valeur est déjà sélectionnée
-//                 const existingItemIndex = this.selectedValues.findIndex(item => item.type === type && item.value === value);
+//         // Met à jour la classe et l'attribut aria-checked de l'élément cliqué
+//         const listItem = document.querySelector(`.${itemDetails.type}_item[value="${itemDetails.value}"]`);
+//         if (listItem) {
+//             listItem.classList.add('selected');
+//             listItem.setAttribute('aria-checked', 'true');
+//         }
 
-//                 if (existingItemIndex !== -1) {
-//                     // Si la valeur est déjà sélectionnée, la retirer du tableau
-//                     this.selectedValues.splice(existingItemIndex, 1);
-//                 } else {
-//                     // Sinon, ajoute la valeur au tableau
-//                     this.selectedValues.push({ type, value });
-//                 }
-
-//                 // Dispatch event to inform other files of the change
-//                 const selectedValuesEvent = new CustomEvent('SelectedValuesChanged', {
-//                     detail: {
-//                         values: this.selectedValues
-//                     }
-//                 });
-//                 document.dispatchEvent(selectedValuesEvent);
-//             }
-//         });
-//     }
-// }
-
-
-// export default class ListClickComponent {
-//     constructor() {
-//         this.selectedValues = []; // Tableau pour stocker toutes les valeurs sélectionnées avec leur type de filtre correspondant
-//         this.initializeEventListeners();
+//         // Déclenche l'événement tagsSelectedChanged avec les nouvelles valeurs du tableau
+//         this.triggerTagsSelectedChanged();
 //     }
 
+//     // Méthode pour déclencher l'événement tagsSelectedChanged
+//     triggerTagsSelectedChanged() {
+//         document.dispatchEvent(new CustomEvent('tagsSelectedChanged', { detail: { clickedItems: this.clickedItems } }));
+//     }
+
+//     // Méthode pour initialiser les écouteurs d'événements
 //     initializeEventListeners() {
-//         document.addEventListener('click', event => {
-//             const clickedElement = event.target;
-//             const listItem = clickedElement.closest('li'); // Trouve l'élément <li> le plus proche
-//             if (listItem) {
-//                 const value = listItem.textContent.trim(); // Récupére la valeur du <li>
-//                 const parentList = listItem.closest('ul'); // Trouve la liste parente de l'élément <li>
-//                 if (parentList) {
-//                     const type = parentList.id.replace('_list', ''); // Récupére le type de filtre à partir de l'identifiant de la liste parente
-
-//                     // Vérifier si la valeur est déjà sélectionnée
-//                     const existingItemIndex = this.selectedValues.findIndex(item => item.type === type && item.value === value);
-
-//                     if (existingItemIndex !== -1) {
-//                         // Si la valeur est déjà sélectionnée, la retirer du tableau
-//                         this.selectedValues.splice(existingItemIndex, 1);
-//                     } else {
-//                         // Sinon, ajoute la valeur au tableau
-//                         this.selectedValues.push({ type, value });
-//                     }
-
-//                     // Dispatch event to inform other files of the change
-//                     const selectedValuesEvent = new CustomEvent('SelectedValuesChanged', {
-//                         detail: {
-//                             values: this.selectedValues
-//                         }
-//                     });
-//                     document.dispatchEvent(selectedValuesEvent);
-//                 }
-//             }
+//         // Écoute de l'événement émis par FiltersItemTemplate.js lorsqu'un élément est sélectionné
+//         document.addEventListener('ItemListSelected', event => {
+//             const { value, type, element } = event.detail;
+//             const itemDetails = { value, type, element };
+//             this.addItemToList(itemDetails);
 //         });
 //     }
 // }
