@@ -42,10 +42,16 @@ new ListClickComponent();
 //     console.log('item list selected', itemDetails);
 // });
 
-// document.addEventListener('foundRecipesChange', (event) => {
-//     const recipesArray = event.detail.foundRecipes;
-//     console.log('Main recipes array changed:', recipesArray);
-// });
+document.addEventListener('listTagChanged', (event) => {
+    const listTags = event.detail;
+    console.log('Listes tags selectionnés:', listTags);
+});
+
+document.addEventListener('mainWordsChanged', (event) => {
+    // Accédez à mainWordsArray à partir de l'instance de MainSearchComponent
+    const { mainWordsArray } = event.detail;
+    console.log('Le tableau mainWordsArray a été mis à jour :', mainWordsArray);
+});
 
 // Initialisation du contrôleur de recettes
 new RecipesController();

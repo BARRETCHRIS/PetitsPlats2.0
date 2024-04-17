@@ -4,99 +4,112 @@ export default class FilteredDatasController {
     constructor() {
         this.tagsList = []; // Tableau pour enregistrer les tags
         this.MainSeachWord =[] // Tableau pour enregistrer les mots filtres de MainSearchComponents
+        this.filtersDatas
+        this.originalRecipes = DatasApi.getAllRecipes(); // Appel de la fonction getAllRecipes
         this.filteredRecipes = []; // Tableau pour enregistrer les recettes filtrées
-        this.filteredRecipesByTag = []; // Tableau pour enregistrer les recettes filtrées par tag
-        this.filteredRecipesByMainSearch = []; // Tableau pour enregistrer les recettes filtrées par MainSearchComponent
+
+        this.mainErrorMsg = document.getElementById('main_error_msg');
+        this.errorMessage = 'Pas de valeur correspondante';
 
         // Initialisation des écouteurs d'événements
         this.initializeEventListeners();
     }
 
-    // Fonction pour initialiser les écouteurs d'événements
-    initializeEventListeners() {
-        // Écoute de l'événement listTagChanged émis par TagsController.js
-        document.addEventListener('listTagChanged', this.handleListTagChanged.bind(this));
+    showErrorMessage() {
+        this.mainErrorMsg.textContent = this.errorMessage;
+    }
 
-        // Écoute de l'événement foundRecipesChange émis par MainSearchComponent.js
-        document.addEventListener('foundRecipesChange', this.handleFoundRecipesChange.bind(this));
+    hideErrorMessage() {
+        this.mainErrorMsg.textContent = '';
     }
 
     // Fonction pour gérer l'événement listTagChanged
     handleListTagChanged(event) {
         const { tagsList } = event.detail;
-        // Réinitialise tagsList
-        this.tagsList = [];
-        // Ajoute les éléments restants de tagsList à tagsList
-        tagsList.forEach(tag => {
-            this.tagsList.push(tag);
-        });
-        // Appelle la méthode pour récupérer les recettes filtrées
-        this.filterRecipes();
-        // this.addFilteredRecipes(); // Ajout des recettes filtrées à this.filteredRecipes
-        console.log('Tags List updated:', this.tagsList);
+        this.tagsList = tagsList.slice(); // Copie de tagsList
+        this.filterRecipes(); // Filtrer les recettes
     }
 
-    // Fonction pour filtrer les recettes en fonction des tags sélectionnés
+    // Fonction pour gérer l'événement mainWordsChanged
+    handleMainWordsChanged(event) {
+        const { mainWordsArray } = event.detail;
+        this.MainSeachWord = mainWordsArray.slice(); // Copie de mainWordsArray
+        this.filterRecipes(); // Filtrer les recettes
+    }
+
+    // Fonction pour filtrer les recettes en fonction des critères
     filterRecipes() {
-        const allRecipes = DatasApi.getAllRecipes(); // Obtenir toutes les recettes
-        // Réinitialise filteredRecipesByTag
-        this.filteredRecipesByTag = [];
-        // Parcourir les recettes
-        allRecipes.forEach(recipe => {
-            // Vérifie si la recette contient tous les tags sélectionnés
-            if (this.tagsList.every(tag => this.recipeContainsTag(recipe, tag))) {
-                this.filteredRecipesByTag.push(recipe); // Ajoute la recette filtrée à filteredRecipesByTag
+        this.filteredRecipes = []; // Réinitialisation de filteredRecipes
+        this.originalRecipes.forEach(recipe => {
+            // Vérification des critères de tagsList
+            const tagMatches = this.tagsList.every(tag => {
+                switch(tag.type) {
+                    case 'ingredients':
+                        return recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase() === tag.value.toLowerCase());
+                    case 'appliance':
+                        return recipe.appliance.toLowerCase() === tag.value.toLowerCase();
+                    case 'ustensils':
+                        return recipe.ustensils.some(ustensil => ustensil.toLowerCase() === tag.value.toLowerCase());
+                    default:
+                        return false;
+                }
+            });
+
+            // Vérification des mots-clés de MainSeachWord dans le titre, la description et les ingrédients
+            const searchMatches = this.MainSeachWord.every(word =>
+                recipe.name.toLowerCase().includes(word.toLowerCase()) ||
+                recipe.description.toLowerCase().includes(word.toLowerCase()) ||
+                recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(word.toLowerCase()))
+            );
+
+            // Si la recette correspond à tous les critères de tagsList et contient tous les mots-clés de MainSeachWord, l'ajouter à filteredRecipes
+            if (tagMatches && searchMatches) {
+                this.filteredRecipes.push(recipe);
             }
         });
-        console.log('Filtered Recipes par tags:', this.filteredRecipesByTag);
+
+        console.log('Recettes filtrées:', this.filteredRecipes);
     }
 
-    // Fonction pour vérifier si une recette contient un tag spécifique
-    recipeContainsTag(recipe, tag) {
-        switch (tag.type) {
-            case 'appliance':
-                return recipe.appliance.toLowerCase().includes(tag.value.toLowerCase());
-            case 'ustensils':
-                return recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(tag.value.toLowerCase()));
-            case 'ingredients':
-                return recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(tag.value.toLowerCase()));
-            default:
-                return false; // Cas par défaut : retourne false si le type de tag n'est pas reconnu
-        }
-    }
+    // Fonction pour initialiser les écouteurs d'événements
+    initializeEventListeners() {
+        // Écoute de l'événement listTagChanged émis par TagsController.js
+        document.addEventListener('listTagChanged', (event) => {
+            this.handleListTagChanged(event);
+        }); 
 
-    // Fonction pour gérer l'événement foundRecipesChange de MainSearchComponent
-    handleFoundRecipesChange(event) {
-        const { foundRecipes } = event.detail;
-        // Enregistre les nouvelles recettes dans un nouveau tableau
-        this.filteredRecipesToMainSearch = foundRecipes.slice(); // Copie les éléments de foundRecipes dans filteredRecipesToMainSearch
-        console.log('Found Recipes updated by MainSearch:', this.filteredRecipesToMainSearch);
-        // this.addFilteredRecipes(); // Ajout des recettes filtrées à this.filteredRecipes
-    }
+        // Écoute de l'événement mainWordsChanged émis par MainSearchComponent.js
+        document.addEventListener('mainWordsChanged', (event) => {
+            this.handleMainWordsChanged(event);
+        }); 
+    }    
 }
-
 
 
 // import { DatasApi } from '../main.js'; // Importation de DatasApi depuis le fichier main.js
 
 // export default class FilteredDatasController {
 //     constructor() {
-//         this.tagsList = []; // Tableau pour enregistrer les tags 
+//         this.tagsList = []; // Tableau pour enregistrer les tags
+//         this.MainSeachWord =[] // Tableau pour enregistrer les mots filtres de MainSearchComponents
+//         this.originalRecipes = DatasApi.getAllRecipes;
 //         this.filteredRecipes = []; // Tableau pour enregistrer les recettes filtrées
-//         this.filteredRecipesByTag = []; // Tableau pour enregistrer les recettes filtrées par tag
-//         this.filteredRecipesByMainSearch = []; // Tableau pour enregistrer les recettes filtrées par MainSearchComponent
+
+//         this.mainErrorMsg = document.getElementById('main_error_msg');
+//         this.errorMessage = 'Pas de valeur correspondante';
 
 //         // Initialisation des écouteurs d'événements
 //         this.initializeEventListeners();
+
+       
 //     }
 
-//     // Fonction pour initialiser les écouteurs d'événements
-//     initializeEventListeners() {
-//         // Écoute de l'événement listTagChanged émis par TagsController.js
-//         document.addEventListener('listTagChanged', this.handleListTagChanged.bind(this));
+//     showErrorMessage() {
+//         this.mainErrorMsg.textContent = this.errorMessage;
+//     }
 
-//         // Écoute de l'événement foundRecipesChange émis par MainSearchComponent.js
-//         document.addEventListener('foundRecipesChange', this.handleFoundRecipesChange.bind(this));
+//     hideErrorMessage() {
+//         this.mainErrorMsg.textContent = '';
 //     }
 
 //     // Fonction pour gérer l'événement listTagChanged
@@ -108,74 +121,35 @@ export default class FilteredDatasController {
 //         tagsList.forEach(tag => {
 //             this.tagsList.push(tag);
 //         });
-//         // Appelle la méthode pour récupérer les recettes filtrées
-//         this.filterRecipes();
 //         console.log('Tags List updated:', this.tagsList);
 //     }
 
-//     // Fonction pour filtrer les recettes en fonction des tags sélectionnés
-//     filterRecipes() {
-//         const allRecipes = DatasApi.getAllRecipes(); // Obtenir toutes les recettes
-//         // Réinitialise filteredRecipesByTag
-//         this.filteredRecipesByTag = [];
-//         // Parcourir les recettes
-//         allRecipes.forEach(recipe => {
-//             // Vérifie si la recette contient tous les tags sélectionnés
-//             if (this.tagsList.every(tag => this.recipeContainsTag(recipe, tag))) {
-//                 this.filteredRecipesByTag.push(recipe); // Ajoute la recette filtrée à filteredRecipesByTag
-//             }
+//     // Fonction pour gérer l'événement listTagChanged
+//     handleMainWordsChanged(event) {
+//         const {mainWordsArray} = event.detail;
+//         // Réinitialise MainSeachWord
+//         this.MainSeachWord = [];
+//         // Ajoute les éléments restants de mainWordsArray à MainSeachWord
+//         mainWordsArray.forEach(word => {
+//             this.MainSeachWord.push(word);
 //         });
-//         console.log('Filtered Recipes par tags:', this.filteredRecipesByTag);
+//         console.log('Main Words List updated:', this.MainSeachWord);
 //     }
 
-//     // Fonction pour vérifier si une recette contient un tag spécifique
-//     recipeContainsTag(recipe, tag) {
-//         switch (tag.type) {
-//             case 'appliance':
-//                 return recipe.appliance.toLowerCase().includes(tag.value.toLowerCase());
-//             case 'ustensils':
-//                 return recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(tag.value.toLowerCase()));
-//             case 'ingredients':
-//                 return recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(tag.value.toLowerCase()));
-//             default:
-//                 return false; // Cas par défaut : retourne false si le type de tag n'est pas reconnu
-//         }
+//     // Fonction pour initialiser les écouteurs d'événements
+//     initializeEventListeners() {
+//         // Écoute de l'événement listTagChanged émis par TagsController.js
+//         document.addEventListener('listTagChanged', (event) => {
+//             this.handleListTagChanged(event);
+//             console.log('Tags List updated:', this.tagsList);
+//         }); 
+
+//         // Écoute de l'événement mainWordsChanged émis par MainSearchComponent.js
+//         document.addEventListener('mainWordsChanged', (event) => {
+//             this.handleMainWordsChanged(event);
+//             console.log('Main Words List updated:', this.MainSeachWord);
+//         }); 
 //     }
 
-//     // Fonction pour gérer l'événement foundRecipesChange de MainSearchComponent
-//     handleFoundRecipesChange(event) {
-//         const { foundRecipes } = event.detail;
-//         // Enregistre les nouvelles recettes dans un nouveau tableau
-//         this.filteredRecipesToMainSearch = foundRecipes.slice(); // Copie les éléments de foundRecipes dans filteredRecipesToMainSearch
-//         console.log('Found Recipes updated by MainSearch:', this.filteredRecipesToMainSearch);
-//     }
 
-//     addFilteredRecipes() {
-//         // Réinitialise filteredRecipes
-//         this.filteredRecipes = [];
-        
-//         // Ajoute les recettes filtrées par tag
-//         this.filteredRecipesByTag.forEach(recipe => {
-//             if (!this.filteredRecipes.includes(recipe)) {
-//                 this.filteredRecipes.push(recipe);
-//             }
-//         });
-
-//         // Ajoute les recettes filtrées par la recherche principale
-//         this.filteredRecipesByMainSearch.forEach(recipe => {
-//             if (!this.filteredRecipes.includes(recipe)) {
-//                 this.filteredRecipes.push(recipe);
-//             }
-//         });
-
-//         // Si aucun filtre n'est appliqué, ajoute toutes les recettes
-//         if (this.tagsList.length === 0 && this.filteredRecipesByMainSearch.length === 0) {
-//             const allRecipes = DatasApi.getAllRecipes();
-//             allRecipes.forEach(recipe => {
-//                 this.filteredRecipes.push(recipe);
-//             });
-//         }
-
-//         console.log('Filtered Recipes added:', this.filteredRecipes);
-//     }
 // }

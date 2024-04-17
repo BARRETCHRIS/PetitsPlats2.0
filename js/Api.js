@@ -7,6 +7,7 @@ export default class Api {
             normalizedWords.push(word.toLowerCase());
         });
         return normalizedWords;
+    
     }
 
     getAllRecipes() {
