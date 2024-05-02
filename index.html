@@ -9,9 +9,9 @@
     <title>Les petits plats</title>
      <meta name="description" content="Les petits plats - Consultez nos meilleures recettes de cuisine et trouvez celle qui vous convient selon vos besoins.">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/logo/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/logo/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/logo/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/logo/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets\logo\favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets\logo\favicon-16x16.png" />
     <!-- style and icons -->
     <link href="css/default.css" rel="stylesheet" type="text/css"/>
     <!-- Fontawesome kit -->
@@ -23,75 +23,98 @@
         <a href="#" id="logo_link" >
             <img src="assets/logo/Logo.png" class="logo" alt="Les petits plats, logo sous forme de texte"/>
         </a>
-        <section class="header_search">
+        <!-- <section class="header_search">
             <h1 class="tagline">chercher parmi plus de 1500 recettes <br> du quotidien, simples et délicieuses</h1>
             <form class="main_search_wrap" role="search" autocomplete="off">
                 <input type="text" id="main_search" class="main_search_input" placeholder="Rechercher une rechette, un ingrédient, ...">
-                <img class="main_search_cross" src="assets/icons/cross.svg" alt="bouton croix pour supprimer la recherche"> 
+                <img id="main_cross" class="filter_search_cross" src="assets/icons/cross.svg" alt="bouton croix pour supprimer la recherche">
                 <svg role="button" class="main_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
                     <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
                     <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
                     <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                 </svg>
             </form>
+            <div id="main_error_msg" class="error_message"></div>
+        </section> -->
+        <section class="header_search">
+            <h1 class="tagline">chercher parmi plus de 1500 recettes <br> du quotidien, simples et délicieuses</h1>
+            <form id="main_form" class="main_search_wrap" role="search" autocomplete="off">
+                <div class="main_btn_wrap">
+                    <input type="text" id="main_search" class="main_search_input" placeholder="Rechercher une rechette, un ingrédient, ...">
+                    <img id="main_cross" class="filter_search_cross" src="assets/icons/cross.svg" alt="bouton croix pour supprimer la recherche">
+                    <svg id="main_loop" role="button" class="main_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
+                        <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
+                        <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
+                        <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
+                    </svg>
+                </div>
+                <div id="main_error_msg" class="error_message"></div>
+            </form>
+            
         </section>
     </header>
     <main class="display_wrap">
-        <section class="filters_search">
+        <section class="filters_search" id="filters_search">
             <div class="filters">
                 <div class="form_filters">
-                    <form action="post" class="ingredients filter" id="ingredients_form">
+                    <form class="ingredients filter" id="ingredients_form">
                         <legend class="title_filter">
                             <span>Ingredients</span>
                             <span class="chevron" id="ingredients_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
                         <div class="filter_search" id="ingredients_btn">
-                            <input type="text" id="ingredients_search" class="filter_search_input" placeholder="">
-                            <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
+                            <input type="search" id="ingredients_search" class="filter_search_input">
+                            <img id="ingredients_cross" class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche">
                             <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
                                 <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
                                 <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                             </svg>
                         </div>
+                        <div id="ingredients_error_msg" class="error_message"></div>
+                        <ul id="ingredients_list" class="list_scroll"></ul>
                     </form>
-                    <form action="post" class="appareils filter" id="appareils_form">
+                    <form class="appliance filter" id="appliance_form">
                         <legend class="title_filter">
                             <span>Appareils</span>
-                            <span class="chevron" id="appareils_chevron"><i class="fa-solid fa-chevron-down"></i></span>
+                            <span class="chevron" id="appliance_chevron"><i class="fa-solid fa-chevron-down"></i></span>
                         </legend>
-                        <div class="filter_search" id="appareils_btn">
-                            <input type="text" id="appareils_search" class="filter_search_input" placeholder="">
-                            <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
+                        <div class="filter_search" id="appliance_btn">
+                            <input type="text" id="appliance_search" class="filter_search_input" placeholder="">
+                            <img id="appliance_cross" class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche">
                             <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
                                 <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
                                 <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                             </svg>
                         </div>
+                        <div id="appliance_error_msg" class="error_message"></div>
+                        <ul id="appliance_list" class="list_scroll"></ul>
                     </form>
-                    <form action="post" class="ustensils filter" id="ustensils_form">
+                    <form class="ustensils filter" id="ustensils_form">
                         <legend class="title_filter">
                             <span>Ustensils</span>
                             <span class="chevron"><i class="fa-solid fa-chevron-down" id="ustensils_chevron"></i></span>
                         </legend>
                         <div class="filter_search" id="ustensils_btn">
                             <input type="text" id="ustensils_search" class="filter_search_input" placeholder="">
-                            <img class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche"> 
+                            <img id="ustensils_cross" class="filter_search_cross" src="assets/icons/cross.svg" alt="Supprimer la recherche">
                             <svg role="button" class="filter_search_loop" viewBox="0 0 51 53" xmlns="http://www.w3.org/2000/svg">
                                 <rect y="0.421875" width="51" height="51" rx="10" fill="#1B1B1B"/>
                                 <circle cx="22" cy="22.4219" r="9.5" stroke="white"/>
                                 <line x1="30.3536" y1="31.0683" x2="39.3536" y2="40.0683" stroke="white"/>
                             </svg>
                         </div>
+                        <div id="ustensils_error_msg" class="error_message"></div>
+                        <ul id="ustensils_list" class="list_scroll"></ul>
                     </form>
                 </div>
                 <div class="nbr_recipes">1500 recettes</div>
             </div>
-            <div class="filters_tags"></div>
+            <div class="filters_tags" id="filters_tags"></div>
         </section>
-           
-        <section class="display_recipes"></section>
+
+        <section id="recipesContainer" class="display_recipes"></section>
 
     </main>
     <!-- **** Scripts **** -->

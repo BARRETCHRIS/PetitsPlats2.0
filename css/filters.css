@@ -36,7 +36,7 @@
     z-index: 1000;
 }
 
-.appareils{
+.appliance{
     left: 300px;
 }
 
@@ -99,8 +99,9 @@
     stroke: inherit;
 }
 
-.filter-error-message{
+.error_message, .selected{
     background: var(--primary-color);
+    padding: 0 2px;
 }
 
 .list_scroll {
@@ -109,10 +110,6 @@
     margin: 0; 
     padding: 0;
     scrollbar-width: none;
-}
-
-.selected {
-    background: var(--primary-color);
 }
 
 .list_scroll::-webkit-scrollbar {
@@ -144,10 +141,18 @@
     margin: 20px 20px 0 0;
     background: var(--primary-color);
     border-radius: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag, .delete_tag{
-    margin: auto 10px auto 17px;
+    margin: auto 10px auto 17px;  
+}
+
+.tag {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag_cross{
