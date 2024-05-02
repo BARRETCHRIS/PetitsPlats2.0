@@ -65,8 +65,8 @@ export default class TagsController {
     initializeEventListeners() {
         // Écoute de l'événement émis par ListClickComponent.js lorsqu'un tag est sélectionné
         const handleItemListSelected = event => {
-            const { value, type, element } = event.detail;
-            const tagDetails = { value, type, element };
+            const { value, type} = event.detail;
+            const tagDetails = { value, type};
 
             this.addTagToList(tagDetails);
             // console.log('Tableau des tags add', this.tagsList);
@@ -85,7 +85,6 @@ export default class TagsController {
         };
 
         document.addEventListener('ItemListSelected', handleItemListSelected);
-        document.addEventListener('tagDeleted', handleRemoveTag);
-        
+        document.addEventListener('tagDeleted', handleRemoveTag);    
     }
 }

@@ -76,18 +76,6 @@ header {
     font-size: 44px;
 }
 
-/* .main_search_wrap{
-    width: 100%;
-    max-width: 950px;
-    height: 75px;
-    margin: 0 auto;
-    padding: 0 10px;
-    background: var(--elements-bg-color);
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-} */
-
 .main_search_wrap{
     width: 100%;
     max-width: 950px;

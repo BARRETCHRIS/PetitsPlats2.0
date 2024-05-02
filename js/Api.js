@@ -7,7 +7,6 @@ export default class Api {
             normalizedWords.push(word.toLowerCase());
         });
         return normalizedWords;
-    
     }
 
     getAllRecipes() {
@@ -26,6 +25,8 @@ export default class Api {
         });
 
         const ingredients = Array.from(ingredientsSet);
+
+        // console.log('Ingrédients origine :', ingredients);
         return ingredients;
     }
 
@@ -36,6 +37,8 @@ export default class Api {
                 appliances.add(appliance);
             });
         });
+
+        // console.log('appliances origine :', appliances);
         return Array.from(appliances);
     }
 
@@ -46,6 +49,8 @@ export default class Api {
                 ustensils.add(ustensil);
             });
         });
+
+        // console.log('ustensils origine :', ustensils);
         return Array.from(ustensils);
     }
 

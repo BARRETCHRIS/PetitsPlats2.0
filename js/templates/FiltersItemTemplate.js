@@ -8,7 +8,6 @@ export default class FiltersItemTemplate {
         const listItemCard = document.createElement('li');
         listItemCard.textContent = item;
         listItemCard.classList.add(`${filterType}_item`);
-        listItemCard.setAttribute('aria-checked', 'false');
         listItemCard.style.cursor = "pointer";
 
         // Ajout d'une valeur à l'attribut value
@@ -18,8 +17,7 @@ export default class FiltersItemTemplate {
             document.dispatchEvent(new CustomEvent('ItemListSelected', { 
                 detail: {
                     value: item,
-                    type: filterType,
-                    element : listItemCard
+                    type: filterType
                 } 
             }));
         });

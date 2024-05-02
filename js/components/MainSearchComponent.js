@@ -8,7 +8,7 @@ export default class MainSearchComponent {
         this.mainCross = document.getElementById('main_cross');
         this.mainLoop = document.getElementById('main_loop');
         this.mainErrorMsg = document.getElementById('main_error_msg');
-        this.errorMessage = 'Pas de valeur correspondante';
+        this.errorMessage = 'Pas de recette correspondante';
         this.mainWordsArray = [];
         this.initializeEventListeners();
     }
@@ -75,12 +75,12 @@ export default class MainSearchComponent {
                 this.containsForbiddenCharacters(value);
                 this.cleanInputValue(value);
             };
-            console.log('tableau des valeur ', this.mainWordsArray);
+            // console.log('tableau des valeur ', this.mainWordsArray);
         });
 
         this.mainCross.addEventListener('click', (event) => {
             this.clearMainSearch();
-            console.log('tableau des valeur ', this.mainWordsArray);
+            // console.log('tableau des valeur ', this.mainWordsArray);
         });   
     }
 }
