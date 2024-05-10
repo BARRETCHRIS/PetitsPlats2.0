@@ -39,5 +39,9 @@ export default class FormFilterComponent {
         this.chevronElement.addEventListener('click', () => {
             this.openingFormHandle();
         });
+
+        document.addEventListener('ItemListSelected', () => {
+            this.closeForm();
+        });
     }
 }

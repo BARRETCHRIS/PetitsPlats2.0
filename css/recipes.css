@@ -91,3 +91,9 @@
     color: var(--text-color);
     margin-top: 0;
 }
+
+@media screen and (max-width: 1000px) {
+    .display_recipes{
+        justify-content: space-around;
+    }
+}

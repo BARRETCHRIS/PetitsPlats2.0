@@ -1,4 +1,4 @@
-import { DatasApi } from '../main.js'; // Import de l'instance de l'API depuis main.js
+import { NewDatasApi } from "../main.js"
 
 export default class FilterInputComponent {
     constructor(type) {
@@ -52,11 +52,11 @@ export default class FilterInputComponent {
         try {
             const inputValue = this.inputElement.value.trim();
             if (inputValue.length > 2) {
-                this.filteredValues = DatasApi.getItemsByType(this.type);
+                this.filteredValues = NewDatasApi.getItemsByType(this.type);
                 this.filteredValues = this.filteredValues.filter(val => val.includes(value));
                 console.log(this.filteredValues);
             } else {
-                this.filteredValues = DatasApi.getItemsByType(this.type);
+                this.filteredValues = NewDatasApi.getItemsByType(this.type);
             }
             document.dispatchEvent(new CustomEvent('FilteredValuesChanged', { detail: { type: this.type, values: this.filteredValues } }));
             return this.filteredValues;

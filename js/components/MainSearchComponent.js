@@ -1,5 +1,3 @@
-import { DatasApi } from '../main.js';
-
 export default class MainSearchComponent {
     constructor() {
         this.type = 'main';
@@ -29,8 +27,8 @@ export default class MainSearchComponent {
         this.mainCross.classList.remove('visible_cross');
     }
 
-    clearMainSearch(){
-        this.mainInput.value = '';
+    clearMainSearch(reset = false){
+        if (reset){this.mainInput.value = ''};
         this.hideCross();
         this.hideErrorMessage();
         this.mainWordsArray = []; 
@@ -74,12 +72,14 @@ export default class MainSearchComponent {
             if(value.length>2){
                 this.containsForbiddenCharacters(value);
                 this.cleanInputValue(value);
+            }else{
+                this.clearMainSearch();
             };
             // console.log('tableau des valeur ', this.mainWordsArray);
         });
 
         this.mainCross.addEventListener('click', (event) => {
-            this.clearMainSearch();
+            this.clearMainSearch(true);
             // console.log('tableau des valeur ', this.mainWordsArray);
         });   
     }
