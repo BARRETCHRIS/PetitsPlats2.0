@@ -28,7 +28,8 @@ export default class FilteredDatasController {
     handleListTagChanged(event) {
         const { tagsList } = event.detail;
         this.tagsList = tagsList.slice(); // Copie de tagsList
-        this.filterRecipes(); // Filtrer les recettes   
+        this.filterRecipes(); // Filtrer les recettes 
+        // console.log('Tag List :', this.tagsList);  
     }
 
     // Fonction pour gérer l'événement mainWordsChanged
@@ -36,6 +37,7 @@ export default class FilteredDatasController {
         const { mainWordsArray } = event.detail;
         this.MainSeachWord = mainWordsArray.slice(); // Copie de mainWordsArray
         this.filterRecipes(); // Filtrer les recettes
+        // console.log('Main World :', this.MainSeachWord);
     }
 
     // Fonction pour filtrer les recettes en fonction des critères
@@ -44,7 +46,8 @@ export default class FilteredDatasController {
 
         let anySearchMatch = false; // Variable pour vérifier s'il y a au moins une correspondance
 
-        for (let i = 0; i < this.originalRecipes.length; i++) {
+        const length= this.originalRecipes.length;
+        for (let i = 0; i < length; i++) {
             const recipe = this.originalRecipes[i];
 
             // Vérification des critères de tagsList
@@ -85,6 +88,8 @@ export default class FilteredDatasController {
         } else {
             this.showErrorMessage();
         }
+
+        // console.log(this.filteredRecipes);
 
         this.emitFilteredRecipesChangedEvent();
     }

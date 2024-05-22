@@ -21,7 +21,8 @@ export default class FiltersListController {
     updateList(values) {
         this.listElement.innerHTML = ''; // Clear previous items
 
-        for (let i = 0; i < values.length; i++) {
+        const length = values.length;
+        for (let i = 0; i < length; i++) {
             const value = values[i];
             const listItem = this.filtersItemTemplate.filteritemCard(value, this.type);
             this.listElement.appendChild(listItem);

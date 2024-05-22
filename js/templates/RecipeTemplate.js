@@ -32,7 +32,8 @@ export default class RecipeTemplate {
         const ingredientsList = card.querySelector('.recipe_uses ul');
 
         // Ajoute chaque ingrédient à la liste
-        for (let i = 0; i < recipe.ingredients.length; i++) {
+        const length = recipe.ingredients.length;
+        for (let i = 0; i < length; i++) {
             const ingredient = recipe.ingredients[i];
             const ingredientItem = document.createElement('li');
             ingredientItem.classList.add('ingredient');

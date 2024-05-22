@@ -19,7 +19,8 @@ export default class FilteredDatasApi {
     // Méthode pour normaliser un tableau de mots
     normalizeWords(words) {
         const normalizedWords = [];
-        for (let i = 0; i < words.length; i++) {
+        const wordsLength = words.length;
+        for (let i = 0; i < wordsLength; i++) {
             const normalizedWord = words[i].toLowerCase();
             normalizedWords.push(normalizedWord);
             // console.log('Mot normalisé :', normalizedWord);
@@ -30,9 +31,11 @@ export default class FilteredDatasApi {
     // Méthode pour obtenir tous les ingrédients uniques
     getAllIngredients() {
         const ingredientsSet = new Set();
-        for (let i = 0; i < this.filteredRecipes.length; i++) {
+        const filtRecipLenght = this.filteredRecipes.length;
+        for (let i = 0; i < filtRecipLenght; i++) {
             const recipe = this.filteredRecipes[i];
-            for (let j = 0; j < recipe.ingredients.length; j++) {
+            const recipIngLength = recipe.ingredients.length;
+            for (let j = 0; j < recipIngLength; j++) {
                 const ingredient = recipe.ingredients[j];
                 const normalizedIngredient = ingredient.ingredient.toLowerCase();
                 ingredientsSet.add(normalizedIngredient);
@@ -48,7 +51,8 @@ export default class FilteredDatasApi {
     // Méthode pour obtenir tous les appareils uniques
     getAllAppliances() {
         const appliancesSet = new Set();
-        for (let i = 0; i < this.filteredRecipes.length; i++) {
+        const filtRecipLenght = this.filteredRecipes.length;
+        for (let i = 0; i < filtRecipLenght; i++) {
             const recipe = this.filteredRecipes[i];
             const normalizedAppliance = recipe.appliance.toLowerCase();
             appliancesSet.add(normalizedAppliance);
@@ -63,9 +67,11 @@ export default class FilteredDatasApi {
     // Méthode pour obtenir tous les ustensiles uniques
     getAllUstensils() {
         const ustensilsSet = new Set();
-        for (let i = 0; i < this.filteredRecipes.length; i++) {
+        const filtRecipLenght = this.filteredRecipes.length;
+        for (let i = 0; i < filtRecipLenght; i++) {
             const recipe = this.filteredRecipes[i];
-            for (let j = 0; j < recipe.ustensils.length; j++) {
+            const recipUstLenght = recipe.ustensils.length;
+            for (let j = 0; j < recipUstLenght; j++) {
                 const ustensil = recipe.ustensils[j];
                 const normalizedUstensil = ustensil.toLowerCase();
                 ustensilsSet.add(normalizedUstensil);

@@ -3,7 +3,8 @@ import { recipes } from '../datas/recipes.js';
 export default class Api {
     normalizeWords(words) {
         const normalizedWords = [];
-        for (let i = 0; i < words.length; i++) {
+        const length = words.length;
+        for (let i = 0; i < length; i++) {
             normalizedWords.push(words[i].toLowerCase());
         }
         return normalizedWords;
@@ -16,12 +17,15 @@ export default class Api {
 
     getAllIngredients() {
         const ingredientsSet = new Set();
-        for (let i = 0; i < recipes.length; i++) {
+        const recipesLength = recipes.length;
+        for (let i = 0; i < recipesLength; i++) {
             const recipe = recipes[i];
-            for (let j = 0; j < recipe.ingredients.length; j++) {
+            const ingredientsLength = recipe.ingredients.length;
+            for (let j = 0; j < ingredientsLength; j++) {
                 const ingredient = recipe.ingredients[j];
                 const normalizedIngredient = this.normalizeWords([ingredient.ingredient]);
-                for (let k = 0; k < normalizedIngredient.length; k++) {
+                const normIngLength = normalizedIngredient.length;
+                for (let k = 0; k < normIngLength; k++) {
                     ingredientsSet.add(normalizedIngredient[k]);
                 }
             }
@@ -35,10 +39,12 @@ export default class Api {
 
     getAllAppliances() {
         const appliances = new Set();
-        for (let i = 0; i < recipes.length; i++) {
+        const recipesLength = recipes.length;
+        for (let i = 0; i < recipesLength; i++) {
             const recipe = recipes[i];
             const normalizedAppliance = this.normalizeWords([recipe.appliance]);
-            for (let j = 0; j < normalizedAppliance.length; j++) {
+            const normApplLength = normalizedAppliance.length;
+            for (let j = 0; j < normApplLength; j++) {
                 appliances.add(normalizedAppliance[j]);
             }
         }
@@ -49,10 +55,12 @@ export default class Api {
 
     getAllUstensils() {
         const ustensils = new Set();
-        for (let i = 0; i < recipes.length; i++) {
+        const recipesLength = recipes.length;
+        for (let i = 0; i < recipesLength; i++) {
             const recipe = recipes[i];
             const normalizedUstensils = this.normalizeWords(recipe.ustensils);
-            for (let j = 0; j < normalizedUstensils.length; j++) {
+            const normUstLength = normalizedUstensils.length;
+            for (let j = 0; j < normUstLength; j++) {
                 ustensils.add(normalizedUstensils[j]);
             }
         }

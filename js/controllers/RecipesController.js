@@ -24,7 +24,8 @@ export default class RecipesController {
 
         const recipesToRender = this.displayRecipesList.length > 0 ? this.displayRecipesList : this.originalRecipes;
 
-        for (let i = 0; i < recipesToRender.length; i++) {
+        const length = recipesToRender.length;
+        for (let i = 0; i < length; i++) {
             const recipe = recipesToRender[i];
             const recipeCard = this.recipeComponent.renderRecipeCard(recipe);
             this.container.appendChild(recipeCard);
