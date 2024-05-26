@@ -1,4 +1,4 @@
-import { DatasApi } from '../main.js';
+// import { DatasApi } from '../main.js';
 
 export default class MainSearchComponent {
     constructor() {
